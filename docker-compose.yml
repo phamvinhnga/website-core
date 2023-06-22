@@ -25,5 +25,13 @@ services:
             - Upload__Folder=/upload
             - Upload__Url=http://localhost:5000/api/file/{0}/{1}
             - ASPNETCORE_URLS=http://0.0.0.0:5000
+        depends_on:
+            - website-database
+        networks:
+            - website-network
 volumes:
     data:
+
+networks:
+  website-network:
+    external: true
