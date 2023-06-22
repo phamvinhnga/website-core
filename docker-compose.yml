@@ -5,6 +5,8 @@ services:
         image: mysql:8.0.33
         container_name: website-database
         restart: always
+        networks:
+            - website-network
         volumes:
             - data:/var/lib/mysql
             - ./_MySQL_Init_Script:/docker-entrypoint-initdb.d
@@ -20,6 +22,8 @@ services:
         image: ngapham0705/website-core:latest
         container_name: website-api
         restart: always
+        networks:
+            - website-network
         volumes:
             - data:/var/lib/website-core
             - ./upload:/upload
