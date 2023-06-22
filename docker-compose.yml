@@ -1,0 +1,47 @@
+version: '3.0'
+
+services:
+    website-database:
+        image: mysql:8.0.33
+        container_name: website-database
+        restart: always
+        volumes:
+            - data:/var/lib/mysql
+            - ./_MySQL_Init_Script:/docker-entrypoint-initdb.d
+        environment:
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_ROOT_USER=${MYSQL_ROOT_USER}
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        ports:
+            - 3308:3306
+    website-api:
+        image: ngapham0705/website-api:latest
+        container_name: website-api
+        restart: always
+        volumes:
+            - data:/var/lib/website-api
+            - ./upload:/upload
+        ports:
+            - 5000:5000
+        environment:
+            - ConnectionString__Server=${MYSQL_SERVER}
+            - ConnectionString__Database=${MYSQL_DATABASE}
+            - ConnectionString__UserId=${MYSQL_ROOT_USER}
+            - ConnectionString__Password=${MYSQL_ROOT_PASSWORD}
+            - ConnectionString__Port= 3306
+            - ConnectionString__Version=8.0.33
+            - JWT__SecurityKey=ABC_C421AAEE0D114E9C
+            - JWT__ValidIssuer=ABC
+            - JWT__ValidAudience=ABC
+            - JWT__Expires=1
+            - JWT__ExpiresRefreshToken=2
+            - Upload__Folder=/upload
+            - Upload__Url=http://localhost:5000/api/file/{0}/{1}
+            - ASPNETCORE_URLS=http://0.0.0.0:5000
+        depends_on:
+            - website-database
+volumes:
+    data:
+  
