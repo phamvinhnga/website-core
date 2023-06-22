@@ -1,9 +1,9 @@
 version: '3.0'
 
 services:
-    website-api:
+    website-core:
         image: ngapham0705/website-core:latest
-        container_name: website-api
+        container_name: website-core
         restart: always
         volumes:
             - data:/var/lib/website-core
