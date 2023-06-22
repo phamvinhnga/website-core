@@ -5,8 +5,6 @@ services:
         image: ngapham0705/website-core:latest
         container_name: website-api
         restart: always
-        networks:
-            - website-network
         volumes:
             - data:/var/lib/website-core
             - ./upload:/upload
@@ -29,6 +27,3 @@ services:
             - ASPNETCORE_URLS=http://0.0.0.0:5000
 volumes:
     data:
-networks:
-  website-network:
-    external: true
