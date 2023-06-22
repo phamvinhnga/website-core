@@ -17,11 +17,11 @@ services:
         ports:
             - 3308:3306
     website-api:
-        image: ngapham0705/website-api:latest
+        image: ngapham0705/website-core:latest
         container_name: website-api
         restart: always
         volumes:
-            - data:/var/lib/website-api
+            - data:/var/lib/website-core
             - ./upload:/upload
         ports:
             - 5000:5000
