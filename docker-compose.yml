@@ -44,4 +44,6 @@ services:
             - website-database
 volumes:
     data:
-  
+networks:
+    website-network:
+        driver: bridge
