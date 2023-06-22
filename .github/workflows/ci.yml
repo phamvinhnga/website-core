@@ -39,27 +39,27 @@ jobs:
             password: ${{ secrets.HOST_PASSWORD }}
             script: |
 
-              if [ ! -d ~/website-api ]; then
-                mkdir ~/website-api
+              if [ ! -d ~/website-core ]; then
+                mkdir ~/website-core
               fi
 
-              if [[ -f website-api/.env ]]; then
-                sed -i 's/^MYSQL_SERVER=.*/MYSQL_SERVER=${{ secrets.MYSQL_SERVER }}/' ~/website-api/.env
-                sed -i 's/^MYSQL_ROOT_USER=.*/MYSQL_ROOT_USER=${{ secrets.MYSQL_ROOT_USER }}/' ~/website-api/.env
-                sed -i 's/^MYSQL_ROOT_PASSWORD=.*/MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}/' ~/website-api/.env
-                sed -i 's/^MYSQL_USER=.*/MYSQL_USER=${{ secrets.MYSQL_USER }}/' ~/website-api/.env
-                sed -i 's/^MYSQL_PASSWORD=.*/MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}/' ~/website-api/.env
-                sed -i 's/^MYSQL_DATABASE=.*/MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}/' ~/website-api/.env
+              if [[ -f website-core/.env ]]; then
+                sed -i 's/^MYSQL_SERVER=.*/MYSQL_SERVER=${{ secrets.MYSQL_SERVER }}/' ~/website-core/.env
+                sed -i 's/^MYSQL_ROOT_USER=.*/MYSQL_ROOT_USER=${{ secrets.MYSQL_ROOT_USER }}/' ~/website-core/.env
+                sed -i 's/^MYSQL_ROOT_PASSWORD=.*/MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}/' ~/website-core/.env
+                sed -i 's/^MYSQL_USER=.*/MYSQL_USER=${{ secrets.MYSQL_USER }}/' ~/website-core/.env
+                sed -i 's/^MYSQL_PASSWORD=.*/MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}/' ~/website-core/.env
+                sed -i 's/^MYSQL_DATABASE=.*/MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}/' ~/website-core/.env
               else
-                echo "MYSQL_SERVER=${{ secrets.MYSQL_SERVER }}" > website-api/.env
-                echo "MYSQL_ROOT_USER=${{ secrets.MYSQL_ROOT_USER }}" >> website-api/.env
-                echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> website-api/.env
-                echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> website-api/.env
-                echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> website-api/.env
-                echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> website-api/.env
+                echo "MYSQL_SERVER=${{ secrets.MYSQL_SERVER }}" > website-core/.env
+                echo "MYSQL_ROOT_USER=${{ secrets.MYSQL_ROOT_USER }}" >> website-core/.env
+                echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> website-core/.env
+                echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> website-core/.env
+                echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> website-core/.env
+                echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> website-core/.env
               fi
             
-              cd ~/website-api/
+              cd ~/website-core/
 
               docker compose up -d
                       
