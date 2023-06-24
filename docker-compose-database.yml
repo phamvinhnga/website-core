@@ -1,6 +1,20 @@
 version: '3.0'
 
 services:
+    website-nginx-proxy:
+        image: nginxproxy/nginx-proxy
+        container_name:  website-nginx-proxy
+        networks:
+            - website-network
+        ports:
+            - 80:80
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+            - ./nginx_proxy_conf:/etc/nginx/conf.d
+        environment:
+            - DEFAULT_HOST=huyenduc.click
+            - VIRTUAL_PROTO=http
+
     website-database:
         image: mysql:8.0.33
         container_name: website-database
