@@ -8,7 +8,7 @@ services:
             - website-network
         restart: always
         volumes:
-            - data:/var/lib/website-core
+            - website-core-volume:/var/lib/website-core
             - ./upload:/upload
         ports:
             - 5000:5000
@@ -29,7 +29,8 @@ services:
             - ASPNETCORE_URLS=http://0.0.0.0:5000
 
 volumes:
-    data:
+    website-core-volume:
+        name: website-core-volume
 
 networks:
   website-network:
