@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Website.Bal.Interfaces;
 using Website.Shared.Bases.Models;
 using Website.Shared.Dtos;
+using Website.Shared.Bases.Dtos;
 
 namespace Website.Api.Controllers
 {
@@ -49,9 +50,17 @@ namespace Website.Api.Controllers
 
         [HttpGet]
         [ServiceFilter(typeof(AdminRoleFilter))]
-        public async Task<IActionResult> GetListAsync([FromQuery] BasePageInputModel input)
+        public async Task<IActionResult> GetListAsync([FromQuery] BasePaginationInputDto input)
         {
-            return Ok(await _postManager.GetListAsync(input));
+            try
+            {
+                return Ok(await _postManager.GetListAsync(input.JsonMapTo<BasePaginationInputModel>()));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         [HttpPost]

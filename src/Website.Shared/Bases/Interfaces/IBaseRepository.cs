@@ -1,11 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Website.Shared.Bases.Models;
 
-namespace Website.Shared.Bases.Repository
+namespace Website.Shared.Bases.Interfaces
 {
     public interface IBaseRepository<TEntity, TPrimaryKey> where TEntity : class where TPrimaryKey : struct
     {
@@ -14,5 +11,6 @@ namespace Website.Shared.Bases.Repository
         Task<TEntity> UpdateAsync(TEntity input, bool saveChanges = true);
         Task<TEntity> GetByIdAsync(TPrimaryKey id);
         Task DeleteAsync(TEntity entity, bool saveChanges = true);
+        Task<BasePaginationOutputModel<TEntity>> GetListAsync(BasePaginationInputModel input);
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Website.Bal.Interfaces;
 using Website.Dal.Interfaces;
 using Website.Entity.Model;
+using Website.Shared.Bases.Dtos;
 using Website.Shared.Bases.Models;
 using static Website.Shared.Common.CoreEnum;
 
@@ -87,10 +88,14 @@ namespace Website.Biz.Managers
             return (StatusCodes.Status200OK, nameof(Message.Success), new PostOutputModel(query));
         }
 
-        public async Task<BasePageOutputModel<PostOutputModel>> GetListAsync(BasePageInputModel input)
+        public async Task<BasePaginationOutputModel<PostOutputModel>> GetListAsync(BasePaginationInputModel input)
         {
-            var query = await _postRepository.GetListAsync(input);
-            return new BasePageOutputModel<PostOutputModel>(query.TotalItem, query.Items.Select(s => new PostOutputModel(s)).ToList());
+            var data = await _postRepository.GetListAsync(input);
+            return new BasePaginationOutputModel<PostOutputModel>()
+            {
+                TotalCount = data.TotalCount,
+                Items = data.Items.Select(s => new PostOutputModel(s)).ToList()
+            };
         }
     }
 }

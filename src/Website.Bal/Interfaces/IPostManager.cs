@@ -10,6 +10,6 @@ namespace Website.Bal.Interfaces
         Task<(int statusCode, string message, PostOutputModel output)> GetByIdAsync(int id);
         Task<(int statusCode, string message, PostOutputModel output)> GetByPermalinkAsync(string permalink);
         Task<(int statusCode, string message)> DeleteAsync(int id);
-        Task<BasePageOutputModel<PostOutputModel>> GetListAsync(BasePageInputModel input);
+        Task<BasePaginationOutputModel<PostOutputModel>> GetListAsync(BasePaginationInputModel input);
     }
 }
