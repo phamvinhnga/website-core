@@ -1,11 +1,12 @@
 ﻿using Website.Api.Filters;
-using Website.Biz.Managers.Interfaces;
 using Website.Entity.Model;
 using Website.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using Microsoft.Extensions.Options;
+using Website.Bal.Interfaces;
+using Website.Shared.Bases.Models;
 
 namespace Website.Api.Controllers
 {

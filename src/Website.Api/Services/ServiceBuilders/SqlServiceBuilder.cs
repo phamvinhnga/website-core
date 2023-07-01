@@ -1,7 +1,7 @@
-﻿using Website.Entity;
-using Website.Entity.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Website.Dal;
+using Website.Shared.Entities;
 
 namespace Website.Api.Services.ServiceBuilders
 {

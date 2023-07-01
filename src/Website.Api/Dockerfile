@@ -8,8 +8,8 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["src/Website.Api/Website.Api.csproj", "src/Website.Api/"]
-COPY ["src/Website.Biz/Website.Biz.csproj", "src/Website.Biz/"]
-COPY ["src/Website.Entity/Website.Entity.csproj", "src/Website.Entity/"]
+COPY ["src/Website.Bal/Website.Bal.csproj", "src/Website.Bal/"]
+COPY ["src/Website.Dal/Website.Dal.csproj", "src/Website.Dal/"]
 COPY ["src/Website.Shared/Website.Shared.csproj", "src/Website.Shared/"]
 RUN dotnet restore "src/Website.Api/Website.Api.csproj"
 COPY . .

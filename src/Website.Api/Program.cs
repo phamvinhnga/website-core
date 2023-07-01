@@ -2,7 +2,7 @@ using Microsoft.Extensions.Options;
 using System.Diagnostics;
 using Website.Api.Services.ServiceBuilders;
 using Website.Entity;
-using Website.Entity.Model;
+using Website.Shared.Bases.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;

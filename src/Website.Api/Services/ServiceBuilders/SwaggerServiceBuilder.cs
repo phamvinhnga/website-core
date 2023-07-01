@@ -19,7 +19,7 @@ namespace Website.Api.Services.ServiceBuilders
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Learn.Website", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Website", Version = "v1" });
                 // Define the BearerAuth scheme that's in use
                 c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme()
                 {

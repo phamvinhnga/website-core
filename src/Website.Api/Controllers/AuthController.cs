@@ -1,11 +1,10 @@
-﻿using AutoMapper;
-using Website.Biz.Dto;
-using Website.Biz.Managers.Interfaces;
-using Website.Entity.Model;
-using Website.Shared.Extensions;
+﻿using Website.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+using System.Net;
+using Website.Bal.Interfaces;
+using Website.Shared.Dtos;
+using Website.Shared.Models;
 
 namespace Website.Api.Controllers
 {
@@ -14,66 +13,110 @@ namespace Website.Api.Controllers
     [Authorize]
     public class AuthController : ControllerBase
     {
-        private readonly IMapper _mapper;
         private readonly IAuthManager _authManager;
+        private readonly ILogger<AuthController> _logger; 
 
         public AuthController(
-            IMapper mapper,
-            IAuthManager authManager
+            IAuthManager authManager,
+            ILogger<AuthController> logger
         )
         {
-            _mapper = mapper;
+            _logger = logger;
             _authManager = authManager;
         }
 
         [HttpGet("current-user")]
+        [ProducesResponseType(typeof(CurrentUserOutputDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetCurrentUserByIdAsync()
         {
             var userId = User.Claims.GetUserId();
-            var user = await _authManager.GetCurrentUserByIdAsync(userId);
-            return Ok(_mapper.Map<CurrentUserOutputDto>(user));
+            try
+            {
+                (int statusCode, string message, var output) = await _authManager.GetCurrentUserByIdAsync(userId);
+                if(statusCode != StatusCodes.Status200OK)
+                {
+                    _logger.LogWarning(message);
+                    return StatusCode(statusCode, message);
+                }
+                return Ok(output.JsonMapTo<CurrentUserOutputDto>());
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
-        [HttpPut("password")]
-        public async Task<IActionResult> ResetPasswordAsync([FromBody] UserChangePasswordInputDto input)
-        {
-            return Ok(true);
-        }
-        
         [HttpPost("sign-up")]
+        [ProducesResponseType(typeof(CurrentUserOutputDto), (int)HttpStatusCode.OK)]
         [AllowAnonymous]
         public async Task<IActionResult> SignUpAsync([FromBody] UserSignUpInputDto input)
         {
-            var user = _mapper.Map<UserSignUpInputModel>(input);
-            var result = await _authManager.SignUpAsync(user);
-            return Ok(result);
+            try
+            {
+                var user = input.JsonMapTo<UserSignUpInputModel>();
+                (int statusCode, string message, var output) = await _authManager.SignUpAsync(user);
+                if (statusCode != StatusCodes.Status200OK)
+                {
+                    _logger.LogWarning(message);
+                    return StatusCode(statusCode, message);
+                }
+                return Ok(output.JsonMapTo<CurrentUserOutputDto>());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         [HttpPost("sign-in")]
+        [ProducesResponseType(typeof(UserSignInOutputDto), (int)HttpStatusCode.OK)]
         [AllowAnonymous]
         public async Task<IActionResult> SignInAsync([FromBody] UserSignInInputDto input)
         {
-            var result = await _authManager.SignInAsync(
-                new UserSignInInputModel 
-                { 
-                    UserName = input.UserName, 
-                    Password = input.Password 
+            try
+            {
+                (int statusCode, string message, var output) = await _authManager.SignInAsync(new UserSignInInputModel(input.UserName, input.Password));
+                if (statusCode != StatusCodes.Status200OK)
+                {
+                    _logger.LogWarning(message);
+                    return StatusCode(statusCode, message);
                 }
-            );
-            return Ok(result);
+                return Ok(output.JsonMapTo<UserSignInOutputDto>());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         [HttpGet("refresh-token")]
+        [ProducesResponseType(typeof(UserSignInOutputModel), (int)HttpStatusCode.OK)]
         [AllowAnonymous]
         public async Task<IActionResult> RefreshTokenAsync()
         {
-            var refreshToken = Request.Headers["refresh-token"].ToString();
-            if (string.IsNullOrEmpty(refreshToken))
+            try
             {
-                return BadRequest( new { message = "Refresh token is empty" });
+                var refreshToken = Request.Headers["refresh-token"].ToString();
+                if (string.IsNullOrEmpty(refreshToken))
+                {
+                    return BadRequest(new { message = "Refresh token is empty" });
+                }
+                (int statusCode, string message, var output) = await _authManager.RefreshTokenAsync(refreshToken);
+                if (statusCode != StatusCodes.Status200OK)
+                {
+                    _logger.LogWarning(message);
+                    return StatusCode(statusCode, message);
+                }
+                return Ok(output.JsonMapTo<UserSignInOutputModel>());
             }
-            var result = await _authManager.RefreshTokenAsync(refreshToken);
-            return Ok(result);
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
     }
 }
