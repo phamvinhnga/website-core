@@ -65,7 +65,7 @@ namespace Website.Api.Controllers
 
         [HttpPost]
         [ServiceFilter(typeof(AdminRoleFilter))]
-        public async Task<IActionResult> CreateAsync([FromBody] PostInputModel input)
+        public async Task<IActionResult> CreateAsync([FromBody] PostInputDto input)
         {
             try
             {
@@ -86,17 +86,17 @@ namespace Website.Api.Controllers
 
         [HttpPut("{id}")]
         [ServiceFilter(typeof(AdminRoleFilter))]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] PostInputModel input)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] PostInputDto input)
         {
             try
             {
-                (int statusCode, string message, var output) = await _postManager.UpdateAsync(id, input, User.Claims.GetUserId());
+                (int statusCode, string message, var output) = await _postManager.UpdateAsync(id, input.JsonMapTo<PostInputModel>(), User.Claims.GetUserId());
                 if (statusCode != StatusCodes.Status200OK)
                 {
                     _logger.LogWarning(message);
                     return StatusCode(statusCode, message);
                 }
-                return Ok(output.JsonMapTo<CurrentUserOutputDto>());
+                return Ok(output.JsonMapTo<PostOutputDto>());
             }
             catch (Exception ex)
             {

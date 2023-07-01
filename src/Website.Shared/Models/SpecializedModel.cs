@@ -5,7 +5,6 @@ namespace Website.Entity.Model
 {
     public class SpecializedModel : BaseModel<int>
     {
-        [Required]
         public string Name { get; set; }
     }
 

@@ -10,12 +10,12 @@ namespace Website.Bal.Interfaces
 {
     public interface ITeacherManager
     {
-        Task CreateAsync(TeacherInputModel input, int userId);
-        Task UpdateAsync(TeacherInputModel input, int userId);
-        Task<TeacherOutputModel> GetByIdAsync(int id);
-        Task DeleteAsync(int id);
-        Task<BasePageOutputModel<TeacherOutputModel>> GetListAsync(BasePageInputModel input);
-        Task<bool> SetIsDisplayIndexPageAsync(int id, bool isDisplayIndexPage);
-        Task<bool> SetIsDisplayTeacherPageAsync(int id, bool isDisplayTeacherPage);
+        Task<(int statusCode, string message, TeacherOutputModel output)> CreateAsync(TeacherInputModel input, int userId);
+        Task<(int statusCode, string message, TeacherOutputModel output)> UpdateAsync(int id, TeacherInputModel input, int userId);
+        Task<(int statusCode, string message)> DeleteAsync(int id);
+        Task<(int statusCode, string message)> SetIsDisplayIndexPageAsync(int id, bool isDisplayIndexPage);
+        Task<(int statusCode, string message)> SetIsDisplayTeacherPageAsync(int id, bool isDisplayTeacherPage);
+        Task<(int statusCode, string message, TeacherOutputModel ouput)> GetByIdAsync(int id);
+        Task<BasePaginationOutputModel<TeacherOutputModel>> GetListAsync(BasePaginationInputModel input);
     }
 }

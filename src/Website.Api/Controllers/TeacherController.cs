@@ -8,6 +8,9 @@ using Serilog;
 using Microsoft.Extensions.Options;
 using Website.Bal.Interfaces;
 using Website.Shared.Bases.Models;
+using Website.Biz.Managers;
+using Website.Shared.Bases.Dtos;
+using Website.Shared.Dtos;
 
 namespace Website.Api.Controllers
 {
@@ -18,45 +21,114 @@ namespace Website.Api.Controllers
     public class TeacherController : ControllerBase
     {
         private readonly ITeacherManager _teacherManager;
+        private readonly ILogger<TeacherController> _logger;
 
         public TeacherController(
-            ITeacherManager teacherManager
+            ITeacherManager teacherManager,
+            ILogger<TeacherController> logger
         ) 
         {
             _teacherManager = teacherManager;
+            _logger = logger;
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            return Ok(await _teacherManager.GetByIdAsync(id));
+            try
+            {
+                (int statusCode, string message, var output) = await _teacherManager.GetByIdAsync(id);
+                if (statusCode != StatusCodes.Status200OK)
+                {
+                    _logger.LogWarning(message);
+                    return StatusCode(statusCode, message);
+                }
+                return Ok(output.JsonMapTo<CurrentUserOutputDto>());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetListAsync([FromQuery] BasePageInputModel input)
+        [ServiceFilter(typeof(AdminRoleFilter))]
+        public async Task<IActionResult> GetListAsync([FromQuery] BasePaginationInputDto input)
         {
-            return Ok(await _teacherManager.GetListAsync(input));
+            try
+            {
+                return Ok(await _teacherManager.GetListAsync(input.JsonMapTo<BasePaginationInputModel>()));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] TeacherInputModel input)
+        [ServiceFilter(typeof(AdminRoleFilter))]
+        public async Task<IActionResult> CreateAsync([FromBody] TeacherInputDto input)
         {
-            await _teacherManager.CreateAsync(input, User.Claims.GetUserId());
-            return Ok(true);
+            try
+            {
+                (int statusCode, string message, var output) = await _teacherManager.CreateAsync(input, User.Claims.GetUserId());
+                if (statusCode != StatusCodes.Status200OK)
+                {
+                    _logger.LogWarning(message);
+                    return StatusCode(statusCode, message);
+                }
+                return Ok(output.JsonMapTo<CurrentUserOutputDto>());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody] TeacherInputModel input)
+        [HttpPut("{id}")]
+        [ServiceFilter(typeof(AdminRoleFilter))]
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] TeacherInputDto input)
         {
-            await _teacherManager.UpdateAsync(input, User.Claims.GetUserId());
-            return Ok(true);
+            try
+            {
+                (int statusCode, string message, var output) = await _teacherManager.UpdateAsync(id, input, User.Claims.GetUserId());
+                if (statusCode != StatusCodes.Status200OK)
+                {
+                    _logger.LogWarning(message);
+                    return StatusCode(statusCode, message);
+                }
+                return Ok(output.JsonMapTo<CurrentUserOutputDto>());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] TeacherInputModel input)
+        [HttpDelete("{id}")]
+        [ServiceFilter(typeof(AdminRoleFilter))]
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            await _teacherManager.UpdateAsync(input, User.Claims.GetUserId());
-            return Ok(true);
+            try
+            {
+                (int statusCode, string message) = await _teacherManager.DeleteAsync(id);
+                if (statusCode != StatusCodes.Status200OK)
+                {
+                    _logger.LogWarning(message);
+                    return StatusCode(statusCode, message);
+                }
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         [HttpPut("index-page/{id:int}")]
@@ -69,13 +141,6 @@ namespace Website.Api.Controllers
         public async Task<IActionResult> SetIsDisplayTeacherPageAsync([Required] int id, [Required] bool isDisplayTeacherPage)
         {
             return Ok(await _teacherManager.SetIsDisplayTeacherPageAsync(id, isDisplayTeacherPage));
-        }
-        
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> DeleteAsync(int id)
-        {
-            await _teacherManager.DeleteAsync(id);
-            return Ok(_teacherManager.DeleteAsync(id));
         }
     }
 }

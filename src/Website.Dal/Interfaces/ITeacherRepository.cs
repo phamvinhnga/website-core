@@ -1,14 +1,10 @@
-﻿using Website.Shared.Bases.Models;
+﻿using Website.Shared.Bases.Interfaces;
+using Website.Shared.Bases.Models;
 using Website.Shared.Entities;
 
 namespace Website.Dal.Interfaces
 {
-    public interface ITeacherRepository
+    public interface ITeacherRepository : IBaseRepository<Teacher, int>
     {
-        Task<Teacher> CreateAsync(Teacher input);
-        Task<int> UpdateAsync(Teacher input);
-        Task<Teacher> GetByIdAsync(int id);
-        Task<int> DeleteAsync(Teacher input);
-        Task<BasePageOutputModel<Teacher>> GetListAsync(BasePageInputModel input);
     }
 }
