@@ -11,17 +11,17 @@ namespace Website.Biz.AutoMapper
         public MappingProfile()
         {
             #region user
-            CreateMap<UserSignUpInputDto, UserSignUpInputModel>();
-            CreateMap<UserSignUpInputModel, User>()
-                .ForMember(d => d.PasswordHash, o => o.Ignore());
-            CreateMap<UserSignInOutputModel, UserSignInOutputDto>();
-            CreateMap<User, CurrentUserOutputModel>();
-            CreateMap<CurrentUserOutputModel, CurrentUserOutputDto>();
-            CreateMap<StaffRegisterInputDto, StaffRegisterInputModel>();
-            CreateMap<StaffRegisterInputModel, User>()
-                .ForMember(d => d.PasswordHash, o => o.Ignore());
-            CreateMap<User, StaffOutputModel>();
-            CreateMap<StaffOutputModel, StaffOutputDto>();
+            //CreateMap<UserSignUpInputDto, UserSignUpInputModel>();
+            //CreateMap<UserSignUpInputModel, User>()
+            //    .ForMember(d => d.PasswordHash, o => o.Ignore());
+            //CreateMap<UserSignInOutputModel, UserSignInOutputDto>();
+            //CreateMap<User, CurrentUserOutputModel>();
+            //CreateMap<CurrentUserOutputModel, CurrentUserOutputDto>();
+            //CreateMap<StaffRegisterInputDto, StaffRegisterInputModel>();
+            //CreateMap<StaffRegisterInputModel, User>()
+            //    .ForMember(d => d.PasswordHash, o => o.Ignore());
+            //CreateMap<User, StaffOutputModel>();
+            //CreateMap<StaffOutputModel, StaffOutputDto>();
             #endregion user
 
             #region post

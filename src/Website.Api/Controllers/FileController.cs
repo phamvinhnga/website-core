@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.ComponentModel.DataAnnotations;
-using Website.Entity.Model;
+using Website.Shared.Bases.Models;
 
 namespace Website.Api.Controllers
 {

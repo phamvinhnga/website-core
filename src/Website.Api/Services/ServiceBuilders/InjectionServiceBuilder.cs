@@ -1,7 +1,7 @@
-﻿using Website.Biz.Managers;
-using Website.Biz.Managers.Interfaces;
+﻿using Website.Bal.Interfaces;
+using Website.Biz.Managers;
+using Website.Dal.Interfaces;
 using Website.Entity.Repositories;
-using Website.Entity.Repositories.Interfaces;
 
 namespace Website.Api.Services.ServiceBuilders
 {
@@ -11,7 +11,6 @@ namespace Website.Api.Services.ServiceBuilders
         {
             #region Manager
             services.AddTransient<IAuthManager, AuthManager>();
-            services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IPostManager, PostManager>();
             services.AddTransient<IFileManager, FileManager>();
             services.AddTransient<ISpecializedManager, SpecializedManager>();
@@ -20,7 +19,6 @@ namespace Website.Api.Services.ServiceBuilders
             #endregion End Manager
 
             #region Repository
-            services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddTransient<ISpecializedRepository, SpecializedRepository>();
             services.AddTransient<ITeacherRepository, TeacherRepository>();
