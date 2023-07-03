@@ -12,8 +12,8 @@ namespace Website.Api.Controllers
 {
     [Route("api/specialized")]
     [ApiController]
-    //[Authorize]
-    //[ServiceFilter(typeof(AdminRoleFilter))]
+    [Authorize]
+    [ServiceFilter(typeof(AdminRoleFilter))]
     public class SpecializedController : ControllerBase
     {
         private readonly ISpecializedManager _specializedManager;
