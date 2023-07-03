@@ -14,8 +14,15 @@ namespace Website.Shared.Common
         
         public enum Message
         {
+            [Description("Something unexpected happened: {0}")]
+            MessageWarning,
+
+            [Description("An error occurred: {0}")]
+            MessageError,
+
             [Description("Don't have permission")]
             NoPermission,
+
             Success
         }
     }

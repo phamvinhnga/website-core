@@ -3,6 +3,7 @@ using Website.Bal.Bases.Interfaces;
 using Website.Shared.Bases.Dtos;
 using Website.Shared.Bases.Entities;
 using Website.Shared.Bases.Models;
+using Website.Shared.Common;
 using Website.Shared.Extensions;
 
 namespace Website.Api.Base.Controllers
@@ -20,7 +21,7 @@ namespace Website.Api.Base.Controllers
         private readonly IBaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey> _baseManager;
         private readonly ILogger<TController> _logger;
 
-        public CrudController(
+        protected CrudController(
             IBaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey> baseManager,
             ILogger<TController> logger
         )
@@ -37,14 +38,14 @@ namespace Website.Api.Base.Controllers
                 (int statusCode, string message, var output) = await _baseManager.GetByIdAsync(id);
                 if (statusCode != StatusCodes.Status200OK)
                 {
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
                 return Ok(output.JsonMapTo<TOutputDto>());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -58,7 +59,7 @@ namespace Website.Api.Base.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -71,14 +72,14 @@ namespace Website.Api.Base.Controllers
                 (int statusCode, string message, var output) = await _baseManager.CreateAsync(input.JsonMapTo<TInputModel>(), User.Claims.GetUserId());
                 if (statusCode != StatusCodes.Status200OK)
                 {
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
                 return Ok(output.JsonMapTo<TOutputModel>());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -91,14 +92,14 @@ namespace Website.Api.Base.Controllers
                 (int statusCode, string message, var output) = await _baseManager.UpdateAsync(id, input.JsonMapTo<TInputModel>(), User.Claims.GetUserId());
                 if (statusCode != StatusCodes.Status200OK)
                 {
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
                 return Ok(output.JsonMapTo<TOutputModel>());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -111,14 +112,14 @@ namespace Website.Api.Base.Controllers
                 (int statusCode, string message) = await _baseManager.DeleteAsync(id);
                 if (statusCode != StatusCodes.Status200OK)
                 {
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
                 return Ok(message);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
