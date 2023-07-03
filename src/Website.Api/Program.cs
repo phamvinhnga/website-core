@@ -1,7 +1,4 @@
-using Microsoft.Extensions.Options;
-using System.Diagnostics;
 using Website.Api.Services.ServiceBuilders;
-using Website.Entity;
 using Website.Shared.Bases.Models;
 
 var builder = WebApplication.CreateBuilder(args);
