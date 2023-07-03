@@ -1,11 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using Website.Shared.Bases.Entities;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Website.Shared.Entities
+namespace Website.Shared.Dtos
 {
-    [Table("ClassRoom")]
-    public class ClassRoom : BaseEntity<int>
+    public class ClassRoomDto 
     {
         [Required]
         public string Name { get; set; }
@@ -15,12 +12,14 @@ namespace Website.Shared.Entities
         [Required]
         public int ToAge { get; set; }
         public int TotalSeats { get; set; }
-        public string Thumbnail { get; set; }
+        public FileDto Thumbnail { get; set; }
         public decimal TutionFee { get; set; }
         public string TutionType { get; set; }
         [Required]
+        [RegularExpression(@"^([01][0-9]|2[0-3]):[0-5][0-9]$", ErrorMessage = "Invalid time format. Please use the format 'HH:mm'.")]
         public string FromTime { get; set; }
         [Required]
+        [RegularExpression(@"^([01][0-9]|2[0-3]):[0-5][0-9]$", ErrorMessage = "Invalid time format. Please use the format 'HH:mm'.")]
         public string ToTime { get; set; }
         [Required]
         public int Index { get; set; }
@@ -28,5 +27,15 @@ namespace Website.Shared.Entities
         public bool IsDisplayClassRoomPage { get; set; }
         [Required]
         public bool Status { get; set; }
+    }
+
+    public class ClassRoomInputDto : ClassRoomDto
+    {
+
+    }
+
+    public class ClassRoomOutputDto : ClassRoomDto
+    {
+
     }
 }
