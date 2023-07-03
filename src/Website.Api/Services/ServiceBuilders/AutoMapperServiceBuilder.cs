@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Website.Biz.AutoMapper;
+using Website.Shared.AutoMapper;
 
 namespace Website.Api.Services.ServiceBuilders
 {

@@ -69,7 +69,7 @@ namespace Website.Api.Controllers
         {
             try
             {
-                (int statusCode, string message, var output) = await _postManager.CreateAsync(input, User.Claims.GetUserId());
+                (int statusCode, string message, var output) = await _postManager.CreateAsync(input.JsonMapTo<PostInputModel>(), User.Claims.GetUserId());
                 if (statusCode != StatusCodes.Status200OK)
                 {
                     _logger.LogWarning(message);

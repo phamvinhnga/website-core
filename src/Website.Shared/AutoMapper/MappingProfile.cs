@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace Website.Biz.AutoMapper
+namespace Website.Shared.AutoMapper
 {
     public class MappingProfile : Profile
     {

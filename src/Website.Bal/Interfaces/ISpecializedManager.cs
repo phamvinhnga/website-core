@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Website.Shared.Entities;
+using Website.Shared.Bases.Interfaces;
 using Website.Entity.Model;
-using Website.Shared.Bases.Models;
 
 namespace Website.Bal.Interfaces
 {
-    public interface ISpecializedManager
+    public interface ISpecializedManager : IBaseManager<Specialized, SpecializedInputModel, SpecializedOutputModel, int>
     {
-        Task CreateAsync(SpecializedInputModel input, int userId);
-        Task UpdateAsync(SpecializedInputModel input, int userId);
-        Task<SpecializedOutputModel> GetByIdAsync(int id);
-        Task DeleteAsync(int id);
-        Task<BasePageOutputModel<SpecializedOutputModel>> GetListAsync(BasePageInputModel input);
     }
 }

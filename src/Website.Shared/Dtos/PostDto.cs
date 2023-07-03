@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Website.Entity.Model;
 
 namespace Website.Shared.Dtos
 {
@@ -15,7 +14,7 @@ namespace Website.Shared.Dtos
         public string Permalink { get; set; }
         public string MetaTitle { get; set; }
         public string MetaDescription { get; set; }
-        public FileModel Thumbnail { get; set; }
+        public FileDto Thumbnail { get; set; }
     }
 
     public class PostOutputDto
@@ -25,7 +24,7 @@ namespace Website.Shared.Dtos
         public string Type { get; set; }
         public string Content { get; set; }
         public string Summary { get; set; }
-        public FileModel Thumbnail { get; set; }
+        public FileDto Thumbnail { get; set; }
         public DateTime CreateDate { get; set; }
         public string Permalink { get; set; }
         public string MetaTitle { get; set; }

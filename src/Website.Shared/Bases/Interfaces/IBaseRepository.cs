@@ -1,10 +1,13 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Website.Shared.Bases.Entities;
 using Website.Shared.Bases.Models;
 
 namespace Website.Shared.Bases.Interfaces
 {
-    public interface IBaseRepository<TEntity, TPrimaryKey> where TEntity : class where TPrimaryKey : struct
+    public interface IBaseRepository<TEntity, TPrimaryKey> 
+        where TEntity : BaseEntity<TPrimaryKey> 
+        where TPrimaryKey : struct
     {
         IQueryable<TEntity> Queryable { get; }
         Task<TEntity> CreateAsync(TEntity entity, bool saveChanges = true);

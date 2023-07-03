@@ -1,13 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using Website.Shared.Bases.Entities;
 using Website.Shared.Bases.Interfaces;
 using Website.Shared.Bases.Models;
 using static Website.Shared.Bases.Enums.BaseEnum;
 
 namespace Website.Shared.Bases.Repository
 {
-    public abstract partial class BaseRepository<TEntity, TPrimaryKey> : IBaseRepository<TEntity, TPrimaryKey> where TEntity : class where TPrimaryKey : struct
+    public abstract partial class BaseRepository<TEntity, TPrimaryKey> : IBaseRepository<TEntity, TPrimaryKey> 
+        where TEntity : BaseEntity<TPrimaryKey> 
+        where TPrimaryKey : struct
     {
         private readonly DbContext _dbContext;
         private readonly DbSet<TEntity> _dbSet;

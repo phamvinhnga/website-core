@@ -33,7 +33,6 @@ namespace Website.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             try
@@ -54,7 +53,6 @@ namespace Website.Api.Controllers
         }
 
         [HttpGet]
-        [ServiceFilter(typeof(AdminRoleFilter))]
         public async Task<IActionResult> GetListAsync([FromQuery] BasePaginationInputDto input)
         {
             try
@@ -69,12 +67,11 @@ namespace Website.Api.Controllers
         }
 
         [HttpPost]
-        [ServiceFilter(typeof(AdminRoleFilter))]
         public async Task<IActionResult> CreateAsync([FromBody] TeacherInputDto input)
         {
             try
             {
-                (int statusCode, string message, var output) = await _teacherManager.CreateAsync(input, User.Claims.GetUserId());
+                (int statusCode, string message, var output) = await _teacherManager.CreateAsync(input.JsonMapTo<TeacherInputModel>(), User.Claims.GetUserId());
                 if (statusCode != StatusCodes.Status200OK)
                 {
                     _logger.LogWarning(message);
@@ -90,12 +87,11 @@ namespace Website.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        [ServiceFilter(typeof(AdminRoleFilter))]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] TeacherInputDto input)
         {
             try
             {
-                (int statusCode, string message, var output) = await _teacherManager.UpdateAsync(id, input, User.Claims.GetUserId());
+                (int statusCode, string message, var output) = await _teacherManager.UpdateAsync(id, input.JsonMapTo<TeacherInputModel>(), User.Claims.GetUserId());
                 if (statusCode != StatusCodes.Status200OK)
                 {
                     _logger.LogWarning(message);
@@ -111,7 +107,6 @@ namespace Website.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        [ServiceFilter(typeof(AdminRoleFilter))]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             try

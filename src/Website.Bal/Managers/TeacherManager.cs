@@ -1,11 +1,8 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Website.Bal.Interfaces;
 using Website.Dal.Interfaces;
 using Website.Entity.Model;
 using Website.Shared.Bases.Models;
-using Website.Shared.Exceptions;
-using Website.Shared.Extensions;
 using static Website.Shared.Common.CoreEnum;
 
 namespace Website.Biz.Managers
@@ -14,17 +11,14 @@ namespace Website.Biz.Managers
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly IFileManager _fileManager;
-        private readonly IMapper _mapper;
 
         public TeacherManager(
             ITeacherRepository teacherRepository,
-            IFileManager fileManager,
-            IMapper mapper
+            IFileManager fileManager
         )
         {
             _teacherRepository = teacherRepository;
             _fileManager = fileManager;
-            _mapper = mapper;
         }
 
         public async Task<(int statusCode, string message, TeacherOutputModel output)> CreateAsync(TeacherInputModel input, int userId)
