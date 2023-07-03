@@ -1,18 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
-using static Website.Shared.Common.CoreEnum;
-using Website.Shared.Bases.Interfaces;
+﻿using static Website.Shared.Common.CoreEnum;
 using Website.Shared.Extensions;
 using Website.Shared.Bases.Entities;
 using Website.Shared.Bases.Models;
 using AutoMapper;
 using Website.Dal.Bases.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Website.Bal.Bases.Interfaces;
 
 namespace Website.Dal.Bases.Managers
 {
-    public class BaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey> : IBaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey> 
+    public class BaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey> : IBaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey>
         where TEntity : BaseEntity<TPrimaryKey>
-        where TInputModel : class 
-        where TOutputModel : class 
+        where TInputModel : class
+        where TOutputModel : class
         where TPrimaryKey : struct
     {
         private readonly IBaseRepository<TEntity, TPrimaryKey> _baseRepository;

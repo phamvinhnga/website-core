@@ -7,13 +7,13 @@ using Website.Shared.Entities;
 
 namespace Website.Biz.Managers
 {
-    public class SpecializedManager : BaseManager<Specialized, SpecializedInputModel, SpecializedOutputModel, int>, ISpecializedManager
-    {
-        public SpecializedManager(
-             IBaseRepository<Specialized, int> baseRepository,
-             IMapper mapper
-        ) : base(baseRepository, mapper)
-        {
-        }
-    }
+    //public class SpecializedManager : BaseManager<Specialized, SpecializedInputModel, SpecializedOutputModel, int>, ISpecializedManager
+    //{
+    //    public SpecializedManager(
+    //         IBaseRepository<Specialized, int> baseRepository,
+    //         IMapper mapper
+    //    ) : base(baseRepository, mapper)
+    //    {
+    //    }
+    //}
 }

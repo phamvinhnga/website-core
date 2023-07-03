@@ -1,10 +1,15 @@
-﻿using Website.Bal.Interfaces;
+﻿using Website.Api.Services.ServiceBuilders;
+using Website.Bal.Bases.Interfaces;
+using Website.Bal.Interfaces;
 using Website.Biz.Managers;
 using Website.Dal.Bases.Interfaces;
+using Website.Dal.Bases.Managers;
 using Website.Dal.Bases.Repository;
 using Website.Dal.Interfaces;
+using Website.Entity.Model;
 using Website.Entity.Repositories;
 using Website.Shared.Entities;
+using static Mysqlx.Error.Types;
 
 namespace Website.Api.Services.ServiceBuilders
 {
@@ -16,8 +21,9 @@ namespace Website.Api.Services.ServiceBuilders
             services.AddTransient<IAuthManager, AuthManager>();
             services.AddTransient<IPostManager, PostManager>();
             services.AddTransient<IFileManager, FileManager>();
-            services.AddTransient<ISpecializedManager, SpecializedManager>();
+            services.AddTransient<IBaseManager<Specialized, SpecializedInputModel, SpecializedOutputModel, int>, BaseManager<Specialized, SpecializedInputModel, SpecializedOutputModel, int>>();
             services.AddTransient<ITeacherManager, TeacherManager>();
+
             #endregion End Manager
 
             #region Repository

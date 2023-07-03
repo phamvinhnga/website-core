@@ -31,4 +31,7 @@
 	<ProjectReference Include="..\Website.Dal\Website.Dal.csproj" />
 	<ProjectReference Include="..\Website.Shared\Website.Shared.csproj" />
 </ItemGroup>
+<ItemGroup>
+  <Folder Include="Base\Interfaces\" />
+</ItemGroup>
 </Project>
