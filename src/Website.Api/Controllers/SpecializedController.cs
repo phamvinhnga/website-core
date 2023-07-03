@@ -11,8 +11,8 @@ namespace Website.Api.Controllers
 {
     [Route("api/specialized")]
     [ApiController]
-    //[Authorize]
-    //[ServiceFilter(typeof(AdminRoleFilter))]
+    [Authorize]
+    [ServiceFilter(typeof(AdminRoleFilter))]
     public class SpecializedController : CrudController<SpecializedController, Specialized, SpecializedInputDto, SpecializedOutputDto, SpecializedInputModel, SpecializedOutputModel, int>
     {
         public SpecializedController(

@@ -5,6 +5,7 @@ using System.Net;
 using Website.Bal.Interfaces;
 using Website.Shared.Dtos;
 using Website.Shared.Models;
+using Website.Shared.Common;
 
 namespace Website.Api.Controllers
 {
@@ -35,14 +36,14 @@ namespace Website.Api.Controllers
                 (int statusCode, string message, var output) = await _authManager.GetCurrentUserByIdAsync(userId);
                 if(statusCode != StatusCodes.Status200OK)
                 {
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
                 return Ok(output.JsonMapTo<CurrentUserOutputDto>());
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -58,14 +59,14 @@ namespace Website.Api.Controllers
                 (int statusCode, string message, var output) = await _authManager.SignUpAsync(user);
                 if (statusCode != StatusCodes.Status200OK)
                 {
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
                 return Ok(output.JsonMapTo<CurrentUserOutputDto>());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -80,14 +81,14 @@ namespace Website.Api.Controllers
                 (int statusCode, string message, var output) = await _authManager.SignInAsync(new UserSignInInputModel(input.UserName, input.Password));
                 if (statusCode != StatusCodes.Status200OK)
                 {
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
                 return Ok(output.JsonMapTo<UserSignInOutputDto>());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -107,14 +108,14 @@ namespace Website.Api.Controllers
                 (int statusCode, string message, var output) = await _authManager.RefreshTokenAsync(refreshToken);
                 if (statusCode != StatusCodes.Status200OK)
                 {
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
                 return Ok(output.JsonMapTo<UserSignInOutputModel>());
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
