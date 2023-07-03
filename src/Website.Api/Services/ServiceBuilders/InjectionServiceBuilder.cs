@@ -9,7 +9,6 @@ using Website.Dal.Interfaces;
 using Website.Entity.Model;
 using Website.Entity.Repositories;
 using Website.Shared.Entities;
-using static Mysqlx.Error.Types;
 
 namespace Website.Api.Services.ServiceBuilders
 {

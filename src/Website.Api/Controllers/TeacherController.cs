@@ -11,6 +11,7 @@ using Website.Shared.Bases.Models;
 using Website.Biz.Managers;
 using Website.Shared.Bases.Dtos;
 using Website.Shared.Dtos;
+using Website.Shared.Common;
 
 namespace Website.Api.Controllers
 {
@@ -40,14 +41,14 @@ namespace Website.Api.Controllers
                 (int statusCode, string message, var output) = await _teacherManager.GetByIdAsync(id);
                 if (statusCode != StatusCodes.Status200OK)
                 {
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
                 return Ok(output.JsonMapTo<CurrentUserOutputDto>());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -61,7 +62,7 @@ namespace Website.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -74,14 +75,14 @@ namespace Website.Api.Controllers
                 (int statusCode, string message, var output) = await _teacherManager.CreateAsync(input.JsonMapTo<TeacherInputModel>(), User.Claims.GetUserId());
                 if (statusCode != StatusCodes.Status200OK)
                 {
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
                 return Ok(output.JsonMapTo<CurrentUserOutputDto>());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -94,14 +95,14 @@ namespace Website.Api.Controllers
                 (int statusCode, string message, var output) = await _teacherManager.UpdateAsync(id, input.JsonMapTo<TeacherInputModel>(), User.Claims.GetUserId());
                 if (statusCode != StatusCodes.Status200OK)
                 {
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
                 return Ok(output.JsonMapTo<CurrentUserOutputDto>());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -114,14 +115,14 @@ namespace Website.Api.Controllers
                 (int statusCode, string message) = await _teacherManager.DeleteAsync(id);
                 if (statusCode != StatusCodes.Status200OK)
                 {
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
                 return Ok(message);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }

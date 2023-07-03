@@ -7,6 +7,7 @@ using Website.Bal.Interfaces;
 using Website.Shared.Bases.Models;
 using Website.Shared.Dtos;
 using Website.Shared.Bases.Dtos;
+using Website.Shared.Common;
 
 namespace Website.Api.Controllers
 {
@@ -36,14 +37,14 @@ namespace Website.Api.Controllers
                 (int statusCode, string message, var output) = await _postManager.GetByIdAsync(id);
                 if (statusCode != StatusCodes.Status200OK)
                 {
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
                 return Ok(output.JsonMapTo<PostOutputDto>());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -58,7 +59,7 @@ namespace Website.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -72,14 +73,14 @@ namespace Website.Api.Controllers
                 (int statusCode, string message, var output) = await _postManager.CreateAsync(input.JsonMapTo<PostInputModel>(), User.Claims.GetUserId());
                 if (statusCode != StatusCodes.Status200OK)
                 {
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
                 return Ok(output.JsonMapTo<PostOutputDto>());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -93,14 +94,14 @@ namespace Website.Api.Controllers
                 (int statusCode, string message, var output) = await _postManager.UpdateAsync(id, input.JsonMapTo<PostInputModel>(), User.Claims.GetUserId());
                 if (statusCode != StatusCodes.Status200OK)
                 {
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
                 return Ok(output.JsonMapTo<PostOutputDto>());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -114,14 +115,14 @@ namespace Website.Api.Controllers
                 (int statusCode, string message) = await _postManager.DeleteAsync(id);
                 if (statusCode != StatusCodes.Status200OK)
                 {
-                    _logger.LogWarning(message);
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
                 return Ok(message);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
