@@ -1,41 +1,92 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Website.Bal.Bases.Interfaces;
 using Website.Bal.Interfaces;
+using Website.Dal.Bases.Interfaces;
+using Website.Dal.Bases.Managers;
 using Website.Dal.Interfaces;
 using Website.Entity.Model;
 using Website.Shared.Bases.Models;
 using Website.Shared.Entities;
-using Website.Shared.Exceptions;
-using Website.Shared.Extensions;
 using static Website.Shared.Common.CoreEnum;
 
 namespace Website.Biz.Managers
 {
-    public class ParentManager : IParentManager
+    public class ParentManager : BaseManager<Parent, ParentInputModel, ParentOutputModel, int>, IParentManager
     {
-        private readonly IParentRepository _parentRepository;
+        private readonly IBaseRepository<Parent, int> _baseRepository;
         private readonly IFileManager _fileManager;
-        private readonly IMapper _mapper;
-
         public ParentManager(
-            IParentRepository parentRepository,
             IFileManager fileManager,
+            IBaseRepository<Parent, int> baseRepository,
             IMapper mapper
-        ) {
-            _parentRepository = parentRepository;
+        ) : base(baseRepository, mapper)
+        {
+            _baseRepository = baseRepository;
             _fileManager = fileManager;
-            _mapper = mapper;
         }
 
-        //public async Task<bool> SetIsDisplayIndexPageAsync(int id, bool isDisplayIndexPage)
-        //{
-        //    var query = await _parentRepository.GetByIdAsync(id);
-        //    if(query == null)
-        //    {
-        //        throw new BadRequestException($"Cannot find ParentId {id}");
-        //    }
-        //    query.IsDisplayIndexPage = isDisplayIndexPage;
-        //    return await _parentRepository.UpdateAsync(query) > 0;
-        //}
-  
+        public override async Task<(int statusCode, string message, ParentOutputModel output)> CreateAsync(ParentInputModel input, int userId)
+        {
+            if (input.Thumbnail != null && string.IsNullOrEmpty(input.Thumbnail.Id))
+            {
+                input.Thumbnail = _fileManager.Upload(input.Thumbnail, Folder.Parent);
+            }
+            var entity = input.MapToEntity();
+            entity.SetCreateDefault(userId);
+            await _baseRepository.CreateAsync(entity);
+            return (StatusCodes.Status200OK, nameof(Message.Success), new ParentOutputModel(entity));
+        }
+
+        public override async Task<(int statusCode, string message, ParentOutputModel output)> UpdateAsync(int id, ParentInputModel input, int userId)
+        {
+            var entity = await _baseRepository.GetByIdAsync(id);
+            if (entity == null)
+            {
+                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found", null);
+            }
+
+            if (input.Thumbnail != null && string.IsNullOrEmpty(input.Thumbnail.Id))
+            {
+                input.Thumbnail = _fileManager.Upload(input.Thumbnail, Folder.Parent);
+            }
+            entity = input.MapToEntity(entity);
+            entity.SetModifyDefault(userId);
+
+            await _baseRepository.UpdateAsync(entity);
+            return (StatusCodes.Status200OK, nameof(Message.Success), new ParentOutputModel(entity));
+        }
+
+        public async Task<(int statusCode, string message)> SetIsDisplayIndexPageAsync(int id, bool isDisplayIndexPage)
+        {
+            var entity = await _baseRepository.GetByIdAsync(id);
+            if (entity == null)
+            {
+                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found");
+            }
+            entity.IsDisplayIndexPage = isDisplayIndexPage;
+            await _baseRepository.UpdateAsync(entity);
+            return (StatusCodes.Status200OK, nameof(Message.Success));
+        }
+
+        public override async Task<(int statusCode, string message, ParentOutputModel ouput)> GetByIdAsync(int id)
+        {
+            var entity = await _baseRepository.GetByIdAsync(id);
+            if (entity == null)
+            {
+                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found", null);
+            }
+            return (StatusCodes.Status200OK, nameof(Message.Success), new ParentOutputModel(entity));
+        }
+
+        public override async Task<BasePaginationOutputModel<ParentOutputModel>> GetListAsync(BasePaginationInputModel input)
+        {
+            var data = await _baseRepository.GetListAsync(input);
+            return new BasePaginationOutputModel<ParentOutputModel>()
+            {
+                TotalCount = data.TotalCount,
+                Items = data.Items.Select(s => new ParentOutputModel(s)).ToList()
+            };
+        }
     }
 }

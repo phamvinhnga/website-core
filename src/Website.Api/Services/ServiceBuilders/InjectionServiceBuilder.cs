@@ -22,6 +22,7 @@ namespace Website.Api.Services.ServiceBuilders
             services.AddTransient<IFileManager, FileManager>();
             services.AddTransient<IBaseManager<Specialized, SpecializedInputModel, SpecializedOutputModel, int>, BaseManager<Specialized, SpecializedInputModel, SpecializedOutputModel, int>>();
             services.AddTransient<ITeacherManager, TeacherManager>();
+            services.AddTransient<IParentManager, ParentManager>();
 
             #endregion End Manager
 
@@ -32,7 +33,7 @@ namespace Website.Api.Services.ServiceBuilders
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddTransient<IBaseRepository<Post, int>, BaseRepository<Post, int>>();
 
-            services.AddTransient<ITeacherRepository, TeacherRepository>();
+            services.AddTransient<IBaseRepository<Parent, int>, BaseRepository<Parent, int>>();
             services.AddTransient<IBaseRepository<Teacher, int>, BaseRepository<Teacher, int>>();
             #endregion End Repository
         }

@@ -1,10 +1,11 @@
-﻿using Website.Entity.Model;
-using Website.Shared.Bases.Models;
+﻿using Website.Bal.Bases.Interfaces;
+using Website.Entity.Model;
+using Website.Shared.Entities;
 
 namespace Website.Bal.Interfaces
 {
-    public interface IParentManager
+    public interface IParentManager : IBaseManager<Parent, ParentInputModel, ParentOutputModel, int>
     {
-        //Task<bool> SetIsDisplayIndexPageAsync(int id, bool isDisplayIndexPage);
+        Task<(int statusCode, string message)> SetIsDisplayIndexPageAsync(int id, bool isDisplayIndexPage);
     }
 }

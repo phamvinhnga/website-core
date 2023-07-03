@@ -44,7 +44,7 @@ namespace Website.Api.Controllers
                     _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
-                return Ok(output.JsonMapTo<CurrentUserOutputDto>());
+                return Ok(output.JsonMapTo<TeacherOutputDto>());
             }
             catch (Exception ex)
             {
@@ -78,7 +78,7 @@ namespace Website.Api.Controllers
                     _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
-                return Ok(output.JsonMapTo<CurrentUserOutputDto>());
+                return Ok(output.JsonMapTo<TeacherOutputDto>());
             }
             catch (Exception ex)
             {
@@ -98,7 +98,7 @@ namespace Website.Api.Controllers
                     _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
                     return StatusCode(statusCode, message);
                 }
-                return Ok(output.JsonMapTo<CurrentUserOutputDto>());
+                return Ok(output.JsonMapTo<TeacherOutputDto>());
             }
             catch (Exception ex)
             {
@@ -130,13 +130,41 @@ namespace Website.Api.Controllers
         [HttpPut("index-page/{id:int}")]
         public async Task<IActionResult> SetIsDisplayIndexPageAsync([Required] int id, [Required] bool isDisplayIndexPage)
         {
-            return Ok(await _teacherManager.SetIsDisplayIndexPageAsync(id, isDisplayIndexPage));
+            try
+            {
+                (int statusCode, string message) = await _teacherManager.SetIsDisplayIndexPageAsync(id, isDisplayIndexPage);
+                if (statusCode != StatusCodes.Status200OK)
+                {
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
+                    return StatusCode(statusCode, message);
+                }
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
         
         [HttpPut("teacher-page/{id:int}")]
         public async Task<IActionResult> SetIsDisplayTeacherPageAsync([Required] int id, [Required] bool isDisplayTeacherPage)
         {
-            return Ok(await _teacherManager.SetIsDisplayTeacherPageAsync(id, isDisplayTeacherPage));
+            try
+            {
+                (int statusCode, string message) = await _teacherManager.SetIsDisplayTeacherPageAsync(id, isDisplayTeacherPage);
+                if (statusCode != StatusCodes.Status200OK)
+                {
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
+                    return StatusCode(statusCode, message);
+                }
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
     }
 }

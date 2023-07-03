@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Website.Shared.Entities
 {
@@ -17,6 +18,7 @@ namespace Website.Shared.Entities
         [Required]
         public Guid ExtensionId { get; set; } = Guid.NewGuid();
 
+        [NotMapped]
         public virtual string FullName => $"{this.Surname.Trim()} {this.Name.Trim()}";
 
         public void SetPasswordHasher(string password)

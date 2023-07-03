@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Website.Entity.Model;
+using Website.Shared.Entities;
 
 namespace Website.Shared.AutoMapper
 {
@@ -6,6 +8,7 @@ namespace Website.Shared.AutoMapper
     {
         public MappingProfile()
         {
+            CreateMap<SpecializedInputModel, Specialized>();
         }
     }
 }
