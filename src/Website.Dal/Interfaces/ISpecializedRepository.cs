@@ -1,4 +1,5 @@
-﻿using Website.Shared.Bases.Interfaces;
+﻿using Website.Dal.Bases.Interfaces;
+using Website.Shared.Bases.Interfaces;
 using Website.Shared.Bases.Models;
 using Website.Shared.Entities;
 

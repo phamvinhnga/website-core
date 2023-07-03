@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Website.Shared.Bases.Entities;
+﻿using Website.Shared.Bases.Entities;
 using Website.Shared.Bases.Models;
 
-namespace Website.Shared.Bases.Interfaces
+namespace Website.Dal.Bases.Interfaces
 {
     public interface IBaseRepository<TEntity, TPrimaryKey> 
         where TEntity : BaseEntity<TPrimaryKey> 

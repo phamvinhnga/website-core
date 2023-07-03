@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using Website.Bal.Interfaces;
-using Website.Dal.Interfaces;
+using Website.Dal.Bases.Interfaces;
+using Website.Dal.Bases.Managers;
 using Website.Entity.Model;
-using Website.Shared.Bases.Interfaces;
-using Website.Shared.Bases.Managers;
 using Website.Shared.Entities;
 
 namespace Website.Biz.Managers

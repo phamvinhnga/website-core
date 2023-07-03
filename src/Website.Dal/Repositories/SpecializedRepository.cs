@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Website.Dal.Interfaces;
 using Website.Shared.Entities;
-using Website.Shared.Bases.Models;
+using Website.Dal.Bases.Repository;
 using Website.Dal;
-using Website.Shared.Bases.Managers;
-using Website.Shared.Bases.Repository;
 
 namespace Website.Entity.Repositories
 {

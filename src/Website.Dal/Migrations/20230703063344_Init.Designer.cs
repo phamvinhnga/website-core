@@ -11,7 +11,7 @@ using Website.Dal;
 namespace Website.Dal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230703052756_Init")]
+    [Migration("20230703063344_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

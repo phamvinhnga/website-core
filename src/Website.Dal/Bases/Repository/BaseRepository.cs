@@ -1,21 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
+using Website.Dal.Bases.Interfaces;
 using Website.Shared.Bases.Entities;
-using Website.Shared.Bases.Interfaces;
 using Website.Shared.Bases.Models;
 using static Website.Shared.Bases.Enums.BaseEnum;
 
-namespace Website.Shared.Bases.Repository
+namespace Website.Dal.Bases.Repository
 {
     public partial class BaseRepository<TEntity, TPrimaryKey> : IBaseRepository<TEntity, TPrimaryKey> 
         where TEntity : BaseEntity<TPrimaryKey> 
         where TPrimaryKey : struct
     {
-        private readonly DbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
         private readonly DbSet<TEntity> _dbSet;
 
-        public BaseRepository(DbContext context)
+        public BaseRepository(ApplicationDbContext context)
         {
             _dbContext = context;
             _dbSet = context.Set<TEntity>();

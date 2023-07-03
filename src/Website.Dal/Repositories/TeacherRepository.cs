@@ -1,14 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Website.Dal.Interfaces;
-using Website.Shared.Bases.Models;
-using Website.Dal;
+﻿using Website.Dal.Interfaces;
 using Website.Shared.Entities;
-using Website.Shared.Bases.Repository;
+using Website.Dal.Bases.Repository;
+using Website.Dal;
 
 namespace Website.Entity.Repositories
 {
     public class TeacherRepository : BaseRepository<Teacher, int>, ITeacherRepository
     {
-        public TeacherRepository(DbContext context) : base(context) { }
+        public TeacherRepository(ApplicationDbContext context) : base(context) { }
     }
 }

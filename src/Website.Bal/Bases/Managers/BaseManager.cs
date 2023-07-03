@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using static Website.Shared.Common.CoreEnum;
 using Website.Shared.Bases.Interfaces;
 using Website.Shared.Extensions;
 using Website.Shared.Bases.Entities;
 using Website.Shared.Bases.Models;
-using System.Collections.Generic;
 using AutoMapper;
+using Website.Dal.Bases.Interfaces;
 
-namespace Website.Shared.Bases.Managers
+namespace Website.Dal.Bases.Managers
 {
     public class BaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey> : IBaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey> 
         where TEntity : BaseEntity<TPrimaryKey>

@@ -12,8 +12,8 @@ namespace Website.Api.Controllers
 {
     [Route("api/specialized")]
     [ApiController]
-    [Authorize]
-    [ServiceFilter(typeof(AdminRoleFilter))]
+    //[Authorize]
+    //[ServiceFilter(typeof(AdminRoleFilter))]
     public class SpecializedController : ControllerBase
     {
         private readonly ISpecializedManager _specializedManager;
@@ -29,7 +29,6 @@ namespace Website.Api.Controllers
         }
 
         [HttpGet]
-        [ServiceFilter(typeof(AdminRoleFilter))]
         public async Task<IActionResult> GetListAsync([FromQuery] BasePaginationInputDto input)
         {
             try
@@ -44,7 +43,6 @@ namespace Website.Api.Controllers
         }
 
         [HttpPost]
-        [ServiceFilter(typeof(AdminRoleFilter))]
         public async Task<IActionResult> CreateAsync([FromBody] PostInputDto input)
         {
             try
@@ -65,7 +63,6 @@ namespace Website.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        [ServiceFilter(typeof(AdminRoleFilter))]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] PostInputDto input)
         {
             try
@@ -86,7 +83,6 @@ namespace Website.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        [ServiceFilter(typeof(AdminRoleFilter))]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             try
