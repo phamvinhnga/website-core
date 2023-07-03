@@ -66,5 +66,6 @@ namespace Website.Dal
         public DbSet<Teacher> Teacher { get; set; }
         public DbSet<Specialized> Specialized { get; set; }
         public DbSet<Parent> Parent { get; set; }
+        public DbSet<ClassRoom> ClassRoom { get; set; }
     }
 }
