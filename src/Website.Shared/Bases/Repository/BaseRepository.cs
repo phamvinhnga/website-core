@@ -8,7 +8,7 @@ using static Website.Shared.Bases.Enums.BaseEnum;
 
 namespace Website.Shared.Bases.Repository
 {
-    public abstract partial class BaseRepository<TEntity, TPrimaryKey> : IBaseRepository<TEntity, TPrimaryKey> 
+    public partial class BaseRepository<TEntity, TPrimaryKey> : IBaseRepository<TEntity, TPrimaryKey> 
         where TEntity : BaseEntity<TPrimaryKey> 
         where TPrimaryKey : struct
     {

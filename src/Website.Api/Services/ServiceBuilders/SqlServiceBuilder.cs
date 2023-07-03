@@ -17,10 +17,10 @@ namespace Website.Api.Services.ServiceBuilders
 
         internal static void UseMigrationServiceBuilder(this IServiceCollection services, IConfiguration configuration)
         {
-            using var serviceScope = services.BuildServiceProvider().CreateScope();
-            using var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
-            Log.Debug("Run migration");
-            context?.Database.Migrate();
+            //using var serviceScope = services.BuildServiceProvider().CreateScope();
+            //using var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+            //Log.Debug("Run migration");
+            //context?.Database.Migrate();
         }
     }
 }
