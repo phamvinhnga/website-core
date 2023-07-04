@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Website.Api.Filters;
+﻿using Website.Api.Filters;
 using Website.Entity.Models;
 using Website.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Website.Bal.Interfaces;
 using Website.Shared.Bases.Models;
-using Website.Biz.Managers;
 using Website.Shared.Bases.Dtos;
 using Website.Shared.Common;
 using Website.Shared.Dtos;
