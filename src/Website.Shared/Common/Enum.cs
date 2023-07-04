@@ -2,7 +2,6 @@
 
 namespace Website.Shared.Common
 {
-
     public static class CoreEnum
     {
         public enum Folder
@@ -25,6 +24,11 @@ namespace Website.Shared.Common
             NoPermission,
 
             Success
+        }
+
+        public enum Category
+        {
+            Gallery
         }
     }
 }

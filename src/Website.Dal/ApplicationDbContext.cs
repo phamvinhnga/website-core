@@ -72,5 +72,7 @@ namespace Website.Dal
         public DbSet<Specialized> Specialized { get; set; }
         public DbSet<Parent> Parent { get; set; }
         public DbSet<ClassRoom> ClassRoom { get; set; }
+        public DbSet<Category> Category { get; set; }
+        public DbSet<Gallery> Gallery { get; set; }
     }
 }
