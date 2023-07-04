@@ -1,35 +1,48 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Website.Bal.Interfaces;
-using Website.Dal.Bases.Interfaces;
-using Website.Dal.Bases.Managers;
-using Website.Dal.Bases.Repository;
 using Website.Dal.Interfaces;
 using Website.Entity.Models;
-using Website.Entity.Repositories;
 using Website.Shared.Bases.Models;
-using Website.Shared.Entities;
+using Website.Shared.Extensions;
 using static Website.Shared.Common.CoreEnum;
 
 namespace Website.Biz.Managers
 {
-    public class PostManager : BaseManager<Post, PostInputModel, PostOutputModel, int>, IPostManager
+    public class PostManager : IPostManager
     {
         private readonly IPostRepository _postRepository;
-        private readonly IBaseRepository<Post, int> _baseRepository;
         private readonly IFileManager _fileManager;
         public PostManager(
             IFileManager fileManager,
-            IBaseRepository<Post, int> baseRepository,
-            IPostRepository postRepository,
-            IMapper mapper
-        ) : base(baseRepository, mapper)
+            IPostRepository postRepository
+        )
         {
             _postRepository = postRepository;   
-            _baseRepository = baseRepository;
             _fileManager = fileManager;
         }
-        public override async Task<(int statusCode, string message, PostOutputModel output)> CreateAsync(PostInputModel input, int userId)
+
+        public virtual async Task<(int statusCode, string message, PostOutputModel output)> GetByIdAsync(int id)
+        {
+            var entity = await _postRepository.GetByIdAsync(id);
+            if (entity == null)
+            {
+                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found", null);
+            }
+            return (StatusCodes.Status200OK, nameof(Message.Success), entity.JsonMapTo<PostOutputModel>());
+        }
+
+        public virtual async Task<(int statusCode, string message)> DeleteAsync(int id)
+        {
+            var entity = await _postRepository.GetByIdAsync(id);
+            if (entity == null)
+            {
+                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found");
+            }
+            await _postRepository.DeleteAsync(entity);
+            return (StatusCodes.Status200OK, nameof(Message.Success));
+        }
+
+        public async Task<(int statusCode, string message, PostOutputModel output)> CreateAsync(PostInputModel input, int userId)
         {
             if (input.Thumbnail != null && string.IsNullOrEmpty(input.Thumbnail.Id))
             {
@@ -38,13 +51,13 @@ namespace Website.Biz.Managers
             input.Content = _fileManager.BuildFileContent(input.Content, Folder.Post);
             var entity = input.MapToEntity();
             entity.SetCreateDefault(userId);
-            await _baseRepository.CreateAsync(entity);
+            await _postRepository.CreateAsync(entity);
             return (StatusCodes.Status200OK, nameof(Message.Success), new PostOutputModel(entity));
         }
 
-        public override async Task<(int statusCode, string message, PostOutputModel output)> UpdateAsync(int id, PostInputModel input, int userId)
+        public async Task<(int statusCode, string message, PostOutputModel output)> UpdateAsync(int id, PostInputModel input, int userId)
         {
-            var entity = await _baseRepository.GetByIdAsync(id);
+            var entity = await _postRepository.GetByIdAsync(id);
             if (entity == null)
             {
                 return (StatusCodes.Status404NotFound, $"EntitEntityId cannot found", null);
@@ -58,7 +71,7 @@ namespace Website.Biz.Managers
             entity = input.MapToEntity(entity);
             entity.SetModifyDefault(userId);
 
-            await _baseRepository.UpdateAsync(entity);
+            await _postRepository.UpdateAsync(entity);
 
             return (StatusCodes.Status200OK, nameof(Message.Success), new PostOutputModel(entity));
         }
@@ -73,9 +86,9 @@ namespace Website.Biz.Managers
             return (StatusCodes.Status200OK, nameof(Message.Success), new PostOutputModel(query));
         }
 
-        public override async Task<BasePaginationOutputModel<PostOutputModel>> GetListAsync(BasePaginationInputModel input)
+        public async Task<BasePaginationOutputModel<PostOutputModel>> GetListAsync(BasePaginationInputModel input)
         {
-            var data = await _baseRepository.GetListAsync(input);
+            var data = await _postRepository.GetListAsync(input);
             return new BasePaginationOutputModel<PostOutputModel>()
             {
                 TotalCount = data.TotalCount,

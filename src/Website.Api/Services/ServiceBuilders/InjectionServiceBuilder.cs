@@ -6,6 +6,7 @@ using Website.Dal.Bases.Interfaces;
 using Website.Dal.Bases.Managers;
 using Website.Dal.Bases.Repository;
 using Website.Dal.Interfaces;
+using Website.Dal.Repositories;
 using Website.Entity.Models;
 using Website.Entity.Repositories;
 using Website.Shared.Entities;
@@ -22,24 +23,23 @@ namespace Website.Api.Services.ServiceBuilders
 
             // class room
             services.AddTransient<IClassRoomManager, ClassRoomManager>();
-            services.AddTransient<IBaseRepository<ClassRoom, int>, BaseRepository<ClassRoom, int>>();
+            services.AddTransient<IClassRoomRepository, ClassRoomRepository>();
 
             // gallery
             services.AddTransient<IGalleryManager, GalleryManager>();
-            services.AddTransient<IBaseRepository<Gallery, int>, BaseRepository<Gallery, int>>();
+            services.AddTransient<IGalleryRepository, GalleryRepository>();
 
             // post
             services.AddTransient<IPostManager, PostManager>();
             services.AddTransient<IPostRepository, PostRepository>();
-            services.AddTransient<IBaseRepository<Post, int>, BaseRepository<Post, int>>();
 
             // parent
             services.AddTransient<IParentManager, ParentManager>();
-            services.AddTransient<IBaseRepository<Parent, int>, BaseRepository<Parent, int>>();
+            services.AddTransient<IParentRepository, ParentRepository>();
 
             // teacher
             services.AddTransient<ITeacherManager, TeacherManager>();
-            services.AddTransient<IBaseRepository<Teacher, int>, BaseRepository<Teacher, int>>();
+            services.AddTransient<ITeacherRepository, TeacherRepository>();
 
             // Specialized
             services.AddTransient<IBaseManager<Specialized, SpecializedInputModel, SpecializedOutputModel, int>, BaseManager<Specialized, SpecializedInputModel, SpecializedOutputModel, int>>();
