@@ -9,6 +9,7 @@ using Website.Dal.Interfaces;
 using Website.Entity.Model;
 using Website.Entity.Repositories;
 using Website.Shared.Entities;
+using Website.Shared.Models;
 
 namespace Website.Api.Services.ServiceBuilders
 {
@@ -24,6 +25,8 @@ namespace Website.Api.Services.ServiceBuilders
             services.AddTransient<IParentManager, ParentManager>();
             services.AddTransient<IClassRoomManager, ClassRoomManager>();
             services.AddTransient<IBaseManager<Specialized, SpecializedInputModel, SpecializedOutputModel, int>, BaseManager<Specialized, SpecializedInputModel, SpecializedOutputModel, int>>();
+            services.AddTransient<IBaseManager<Category, CategoryInputModel, CategoryOutputModel, int>, BaseManager<Category, CategoryInputModel, CategoryOutputModel, int>>();
+
             #endregion End Manager
 
             #region Repository

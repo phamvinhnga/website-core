@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System;
 using Website.Shared.Bases.Models;
 using Website.Shared.Entities;
 
@@ -36,6 +35,12 @@ namespace Website.Dal
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Category>()
+                .HasMany(h => h.Gallerys)
+                .WithOne(w => w.Category)
+                .HasForeignKey(h => h.CategoryId)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
             builder.Entity<User>().HasData(
                 new User
                 {
