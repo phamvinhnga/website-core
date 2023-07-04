@@ -40,14 +40,14 @@ namespace Website.Api.Controllers
                 if (statusCode != StatusCodes.Status200OK)
                 {
                     _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
-                    return StatusCode(statusCode, message);
+                    return StatusCode(statusCode, new { message = message });
                 }
                 return Ok(output.JsonMapTo<ParentOutputDto>());
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
 
@@ -61,7 +61,7 @@ namespace Website.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
 
@@ -74,14 +74,14 @@ namespace Website.Api.Controllers
                 if (statusCode != StatusCodes.Status200OK)
                 {
                     _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
-                    return StatusCode(statusCode, message);
+                    return StatusCode(statusCode, new { message = message });
                 }
                 return Ok(output.JsonMapTo<ParentOutputDto>());
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
 
@@ -94,14 +94,14 @@ namespace Website.Api.Controllers
                 if (statusCode != StatusCodes.Status200OK)
                 {
                     _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
-                    return StatusCode(statusCode, message);
+                    return StatusCode(statusCode, new { message = message });
                 }
                 return Ok(output.JsonMapTo<ParentOutputDto>());
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
 
@@ -114,14 +114,14 @@ namespace Website.Api.Controllers
                 if (statusCode != StatusCodes.Status200OK)
                 {
                     _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
-                    return StatusCode(statusCode, message);
+                    return StatusCode(statusCode, new { message = message });
                 }
                 return Ok(message);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
 
@@ -134,14 +134,14 @@ namespace Website.Api.Controllers
                 if (statusCode != StatusCodes.Status200OK)
                 {
                     _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
-                    return StatusCode(statusCode, message);
+                    return StatusCode(statusCode, new { message = message });
                 }
                 return Ok(message);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
     }
