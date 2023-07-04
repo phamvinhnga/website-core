@@ -1,5 +1,5 @@
 ﻿using Website.Bal.Bases.Interfaces;
-using Website.Entity.Model;
+using Website.Entity.Models;
 using Website.Shared.Bases.Models;
 using Website.Shared.Entities;
 

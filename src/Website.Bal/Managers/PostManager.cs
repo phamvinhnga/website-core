@@ -5,7 +5,7 @@ using Website.Dal.Bases.Interfaces;
 using Website.Dal.Bases.Managers;
 using Website.Dal.Bases.Repository;
 using Website.Dal.Interfaces;
-using Website.Entity.Model;
+using Website.Entity.Models;
 using Website.Entity.Repositories;
 using Website.Shared.Bases.Models;
 using Website.Shared.Entities;

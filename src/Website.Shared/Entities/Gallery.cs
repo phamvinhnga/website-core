@@ -9,6 +9,7 @@ namespace Website.Shared.Entities
     {
         public string Name { get; set; }
         [Required]
+        public string Thumbnail { get; set; }
         public int Index { get; set; }
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]

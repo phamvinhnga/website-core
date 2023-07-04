@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Website.Bal.Interfaces;
 using Website.Dal.Bases.Interfaces;
 using Website.Dal.Bases.Managers;
-using Website.Entity.Model;
+using Website.Entity.Models;
 using Website.Shared.Bases.Models;
 using Website.Shared.Entities;
 using Website.Shared.Models;

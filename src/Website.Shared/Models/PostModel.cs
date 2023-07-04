@@ -4,7 +4,7 @@ using Website.Shared.Entities;
 using Website.Shared.Extensions;
 using static Website.Shared.Common.CoreEnum;
 
-namespace Website.Entity.Model
+namespace Website.Entity.Models
 {
     public class PostInputModel 
     {

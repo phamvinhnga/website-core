@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Website.Entity.Model;
+using Website.Entity.Models;
 using Website.Shared.Entities;
 
 namespace Website.Shared.AutoMapper

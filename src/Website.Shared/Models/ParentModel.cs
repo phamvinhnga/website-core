@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Website.Shared.Entities;
 using Website.Shared.Extensions;
 
-namespace Website.Entity.Model
+namespace Website.Entity.Models
 {
     public class ParentInputModel
     {

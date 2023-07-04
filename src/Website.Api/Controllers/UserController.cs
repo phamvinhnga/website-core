@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Website.Api.Filters;
-using Website.Entity.Model;
+using Website.Entity.Models;
 using Website.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

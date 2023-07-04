@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Website.Shared.Extensions;
 
-namespace Website.Entity.Model
+namespace Website.Entity.Models
 {
     public class FileModel
     {

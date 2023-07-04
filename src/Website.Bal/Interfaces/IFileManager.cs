@@ -1,7 +1,5 @@
-﻿using Website.Entity.Model;
+﻿using Website.Entity.Models;
 using Website.Shared.Common;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Website.Bal.Interfaces
 {

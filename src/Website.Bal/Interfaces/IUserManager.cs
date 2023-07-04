@@ -1,4 +1,4 @@
-﻿using Website.Entity.Model;
+﻿using Website.Entity.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

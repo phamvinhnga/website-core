@@ -1,5 +1,5 @@
 ﻿using Website.Api.Filters;
-using Website.Entity.Model;
+using Website.Entity.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Website.Shared.Dtos;

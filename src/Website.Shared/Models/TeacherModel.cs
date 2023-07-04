@@ -1,10 +1,9 @@
-﻿
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Website.Shared.Entities;
 using Website.Shared.Extensions;
 
-namespace Website.Entity.Model
+namespace Website.Entity.Models
 {
     public class TeacherInputModel
     {

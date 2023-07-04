@@ -1,4 +1,4 @@
-﻿using Website.Entity.Model;
+﻿using Website.Entity.Models;
 using Website.Shared.Bases.Models;
 using Website.Shared.Entities;
 using Website.Shared.Extensions;

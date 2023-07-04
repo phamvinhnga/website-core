@@ -4,9 +4,9 @@ using static Website.Shared.Common.CoreEnum;
 using Website.Bal.Interfaces;
 using Website.Dal.Bases.Interfaces;
 using Website.Dal.Bases.Managers;
-using Website.Entity.Model;
 using Website.Shared.Bases.Models;
 using Website.Shared.Entities;
+using Website.Shared.Models;
 
 namespace Website.Bal.Managers
 {
@@ -53,18 +53,6 @@ namespace Website.Bal.Managers
 
             await _baseRepository.UpdateAsync(entity);
             return (StatusCodes.Status200OK, nameof(Message.Success), new GalleryOutputModel(entity));
-        }
-
-        public async Task<(int statusCode, string message)> SetIsDisplayIndexPageAsync(int id, bool isDisplayIndexPage)
-        {
-            var entity = await _baseRepository.GetByIdAsync(id);
-            if (entity == null)
-            {
-                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found");
-            }
-            entity.IsDisplayIndexPage = isDisplayIndexPage;
-            await _baseRepository.UpdateAsync(entity);
-            return (StatusCodes.Status200OK, nameof(Message.Success));
         }
 
         public override async Task<(int statusCode, string message, GalleryOutputModel output)> GetByIdAsync(int id)

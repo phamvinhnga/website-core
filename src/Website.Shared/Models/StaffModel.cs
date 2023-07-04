@@ -1,4 +1,4 @@
-﻿namespace Website.Entity.Model
+﻿namespace Website.Entity.Models
 {
     public class StaffRegisterInputModel
     {
