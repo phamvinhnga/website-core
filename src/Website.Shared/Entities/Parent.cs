@@ -16,6 +16,7 @@ namespace Website.Shared.Entities
         public string Thumbnail { get; set; }
         public string Profession { get; set; }
         public string Feedback { get; set; }
+        [NotMapped]
         public virtual string FullName => $"{this.Surname.Trim()} {this.Name.Trim()}";
         public int Index { get; set; }
         public bool IsDisplayIndexPage { get; set; }

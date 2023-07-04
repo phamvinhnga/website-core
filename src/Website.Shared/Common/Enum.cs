@@ -10,7 +10,8 @@ namespace Website.Shared.Common
             Teacher,
             Parent,
             ClassRoom,
-            Gallery
+            Gallery,
+            Facility
         }
         
         public enum Message

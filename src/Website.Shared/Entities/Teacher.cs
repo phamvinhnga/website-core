@@ -20,6 +20,7 @@ namespace Website.Shared.Entities
         public int SpecializedId { get; set; }
         [ForeignKey("SpecializedId")]
         public Specialized Specialized { get; set; }
+        [NotMapped]
         public virtual string FullName => $"{this.Surname.Trim()} {this.Name.Trim()}";
         public int Index { get; set; }
         public bool IsDisplayIndexPage { get; set; }

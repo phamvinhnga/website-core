@@ -10,7 +10,9 @@ namespace Website.Shared.Dtos
         public FileDto Thumbnail { get; set; }
         [Required]
         public int Index { get; set; }
+        [Required]
         public int CategoryId { get; set; }
+        public bool IsDisplayGalleryPage { get; set; }
     }
 
     public class GalleryInputDto : GalleryDto
