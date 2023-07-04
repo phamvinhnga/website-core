@@ -6,7 +6,7 @@ namespace Website.Bal.Interfaces
 {
     public interface IClassRoomManager : IBaseManager<ClassRoom, ClassRoomInputModel, ClassRoomOutputModel, int>
     {
-        Task<(int statusCode, string message)> SetIsDisplayIndexPageAsync(int id, bool isDisplayIndexPage);
-        Task<(int statusCode, string message)> SetIsDisplayClassRoomPageAsync(int id, bool isDisplayClassRoomPage);
+        Task<(int statusCode, string message)> SetIsDisplayIndexPageAsync(int id, bool isDisplayIndexPage, int userId);
+        Task<(int statusCode, string message)> SetIsDisplayClassRoomPageAsync(int id, bool isDisplayClassRoomPage, int userId);
     }
 }

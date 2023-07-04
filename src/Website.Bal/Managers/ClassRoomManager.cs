@@ -82,7 +82,7 @@ namespace Website.Bal.Managers
             };
         }
 
-        public async Task<(int statusCode, string message)> SetIsDisplayIndexPageAsync(int id, bool isDisplayIndexPage)
+        public async Task<(int statusCode, string message)> SetIsDisplayIndexPageAsync(int id, bool isDisplayIndexPage, int userId)
         {
             var entity = await _baseRepository.GetByIdAsync(id);
             if (entity == null)
@@ -90,11 +90,12 @@ namespace Website.Bal.Managers
                 return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found");
             }
             entity.IsDisplayIndexPage = isDisplayIndexPage;
+            entity.SetModifyDefault(userId);
             await _baseRepository.UpdateAsync(entity);
             return (StatusCodes.Status200OK, nameof(Message.Success));
         }
 
-        public async Task<(int statusCode, string message)> SetIsDisplayClassRoomPageAsync(int id, bool isDisplayClassRoomPage)
+        public async Task<(int statusCode, string message)> SetIsDisplayClassRoomPageAsync(int id, bool isDisplayClassRoomPage, int userId)
         {
             var entity = await _baseRepository.GetByIdAsync(id);
             if (entity == null)
@@ -102,6 +103,7 @@ namespace Website.Bal.Managers
                 return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found");
             }
             entity.IsDisplayClassRoomPage = isDisplayClassRoomPage;
+            entity.SetModifyDefault(userId);
             await _baseRepository.UpdateAsync(entity);
             return (StatusCodes.Status200OK, nameof(Message.Success));
         }
