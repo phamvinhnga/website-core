@@ -4,6 +4,7 @@ using Website.Bal.Interfaces;
 using Website.Shared.Bases.Models;
 using Website.Shared.Models;
 using Website.Dal.Interfaces;
+using Website.Shared.Extensions;
 
 namespace Website.Bal.Managers
 {
@@ -37,7 +38,7 @@ namespace Website.Bal.Managers
             var entity = await _galleryRepository.GetByIdAsync(id);
             if (entity == null)
             {
-                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found", null);
+                return (StatusCodes.Status404NotFound, string.Format(Message.MessageEntityNotFound.GetEnumDescription(), id), null);
             }
 
             if (input.Thumbnail != null && string.IsNullOrEmpty(input.Thumbnail.Id))
@@ -56,7 +57,7 @@ namespace Website.Bal.Managers
             var entity = await _galleryRepository.GetByIdAsync(id);
             if (entity == null)
             {
-                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found", null);
+                return (StatusCodes.Status404NotFound, string.Format(Message.MessageEntityNotFound.GetEnumDescription(), id), null);
             }
             return (StatusCodes.Status200OK, nameof(Message.Success), new GalleryOutputModel(entity));
         }
@@ -76,7 +77,7 @@ namespace Website.Bal.Managers
             var entity = await _galleryRepository.GetByIdAsync(id);
             if (entity == null)
             {
-                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found");
+                return (StatusCodes.Status404NotFound, string.Format(Message.MessageEntityNotFound.GetEnumDescription(), id));
             }
             return (StatusCodes.Status200OK, nameof(Message.Success));
         }

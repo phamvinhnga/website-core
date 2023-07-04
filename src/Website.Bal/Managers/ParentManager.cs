@@ -3,6 +3,8 @@ using Website.Bal.Interfaces;
 using Website.Dal.Interfaces;
 using Website.Entity.Models;
 using Website.Shared.Bases.Models;
+using Website.Shared.Common;
+using Website.Shared.Extensions;
 using static Website.Shared.Common.CoreEnum;
 
 namespace Website.Biz.Managers
@@ -37,7 +39,7 @@ namespace Website.Biz.Managers
             var entity = await _parentRepository.GetByIdAsync(id);
             if (entity == null)
             {
-                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found", null);
+                return (StatusCodes.Status404NotFound, string.Format(Message.MessageEntityNotFound.GetEnumDescription(), id), null);
             }
 
             if (input.Thumbnail != null && string.IsNullOrEmpty(input.Thumbnail.Id))
@@ -56,7 +58,7 @@ namespace Website.Biz.Managers
             var entity = await _parentRepository.GetByIdAsync(id);
             if (entity == null)
             {
-                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found");
+                return (StatusCodes.Status404NotFound, string.Format(Message.MessageEntityNotFound.GetEnumDescription(), id));
             }
             await _parentRepository.DeleteAsync(entity);
             return (StatusCodes.Status200OK, nameof(Message.Success));
@@ -68,7 +70,7 @@ namespace Website.Biz.Managers
             var entity = await _parentRepository.GetByIdAsync(id);
             if (entity == null)
             {
-                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found");
+                return (StatusCodes.Status404NotFound, string.Format(Message.MessageEntityNotFound.GetEnumDescription(), id));
             }
             entity.IsDisplayIndexPage = isDisplayIndexPage;
             await _parentRepository.UpdateAsync(entity);
@@ -80,7 +82,7 @@ namespace Website.Biz.Managers
             var entity = await _parentRepository.GetByIdAsync(id);
             if (entity == null)
             {
-                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found", null);
+                return (StatusCodes.Status404NotFound, string.Format(Message.MessageEntityNotFound.GetEnumDescription(), id), null);
             }
             return (StatusCodes.Status200OK, nameof(Message.Success), new ParentOutputModel(entity));
         }

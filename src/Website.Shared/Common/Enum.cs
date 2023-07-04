@@ -24,6 +24,8 @@ namespace Website.Shared.Common
             [Description("Don't have permission")]
             NoPermission,
 
+            [Description("EntityId {0} cannot found")]
+            MessageEntityNotFound,
             Success
         }
 

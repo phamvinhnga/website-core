@@ -40,7 +40,7 @@ namespace Website.Dal.Bases.Managers
             var entity = await _baseRepository.GetByIdAsync(id);
             if (entity == null)
             {
-                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found", null);
+                return (StatusCodes.Status404NotFound, string.Format(Message.MessageEntityNotFound.GetEnumDescription(), id), null);
             }
             entity = _mapper.Map<TInputModel, TEntity>(input, entity);
             entity.SetModifyDefault(userId);
@@ -53,7 +53,7 @@ namespace Website.Dal.Bases.Managers
             var entity = await _baseRepository.GetByIdAsync(id);
             if (entity == null)
             {
-                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found", null);
+                return (StatusCodes.Status404NotFound, string.Format(Message.MessageEntityNotFound.GetEnumDescription(), id), null);
             }
             return (StatusCodes.Status200OK, nameof(Message.Success), entity.JsonMapTo<TOutputModel>());
         }
@@ -63,7 +63,7 @@ namespace Website.Dal.Bases.Managers
             var entity = await _baseRepository.GetByIdAsync(id);
             if (entity == null)
             {
-                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found");
+                return (StatusCodes.Status404NotFound, string.Format(Message.MessageEntityNotFound.GetEnumDescription(), id));
             }
             await _baseRepository.DeleteAsync(entity);
             return (StatusCodes.Status200OK, nameof(Message.Success));
