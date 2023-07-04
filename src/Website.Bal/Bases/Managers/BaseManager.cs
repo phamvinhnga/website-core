@@ -48,7 +48,7 @@ namespace Website.Dal.Bases.Managers
             return (StatusCodes.Status200OK, nameof(Message.Success), entity.JsonMapTo<TOutputModel>());
         }
 
-        public virtual async Task<(int statusCode, string message, TOutputModel ouput)> GetByIdAsync(TPrimaryKey id)
+        public virtual async Task<(int statusCode, string message, TOutputModel output)> GetByIdAsync(TPrimaryKey id)
         {
             var entity = await _baseRepository.GetByIdAsync(id);
             if (entity == null)

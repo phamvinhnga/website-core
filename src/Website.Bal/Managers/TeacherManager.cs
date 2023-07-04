@@ -81,7 +81,7 @@ namespace Website.Biz.Managers
             return (StatusCodes.Status200OK, nameof(Message.Success));
         }
         
-        public override async Task<(int statusCode, string message, TeacherOutputModel ouput)> GetByIdAsync(int id)
+        public override async Task<(int statusCode, string message, TeacherOutputModel output)> GetByIdAsync(int id)
         {
             var entity = await _baseRepository.GetByIdAsync(id);
             if (entity == null)

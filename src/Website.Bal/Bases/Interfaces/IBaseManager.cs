@@ -11,7 +11,7 @@ namespace Website.Bal.Bases.Interfaces
     {
         Task<(int statusCode, string message, TOutputModel output)> CreateAsync(TInputModel input, int userId);
         Task<(int statusCode, string message, TOutputModel output)> UpdateAsync(TPrimaryKey id, TInputModel input, int userId);
-        Task<(int statusCode, string message, TOutputModel ouput)> GetByIdAsync(TPrimaryKey id);
+        Task<(int statusCode, string message, TOutputModel output)> GetByIdAsync(TPrimaryKey id);
         Task<BasePaginationOutputModel<TOutputModel>> GetListAsync(BasePaginationInputModel input);
         Task<(int statusCode, string message)> DeleteAsync(TPrimaryKey id);
     }

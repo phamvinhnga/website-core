@@ -62,7 +62,7 @@ namespace Website.Bal.Managers
             return (StatusCodes.Status200OK, nameof(Message.Success), new ClassRoomOutputModel(entity));
         }
 
-        public override async Task<(int statusCode, string message, ClassRoomOutputModel ouput)> GetByIdAsync(int id)
+        public override async Task<(int statusCode, string message, ClassRoomOutputModel output)> GetByIdAsync(int id)
         {
             var entity = await _baseRepository.GetByIdAsync(id);
             if (entity == null)

@@ -1,5 +1,4 @@
-﻿using Website.Api.Services.ServiceBuilders;
-using Website.Bal.Bases.Interfaces;
+﻿using Website.Bal.Bases.Interfaces;
 using Website.Bal.Interfaces;
 using Website.Bal.Managers;
 using Website.Biz.Managers;
@@ -29,8 +28,11 @@ namespace Website.Api.Services.ServiceBuilders
 
             #region Repository
             services.AddTransient<ISpecializedRepository, SpecializedRepository>();
+
+            // post
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddTransient<IBaseRepository<Post, int>, BaseRepository<Post, int>>();
+
             services.AddTransient<IBaseRepository<Parent, int>, BaseRepository<Parent, int>>();
             services.AddTransient<IBaseRepository<Teacher, int>, BaseRepository<Teacher, int>>();
             services.AddTransient<IBaseRepository<Specialized, int>, BaseRepository<Specialized, int>>();

@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using Website.Bal.Bases.Interfaces;
 using Website.Bal.Interfaces;
 using Website.Dal.Bases.Interfaces;
 using Website.Dal.Bases.Managers;
-using Website.Dal.Interfaces;
 using Website.Entity.Model;
 using Website.Shared.Bases.Models;
 using Website.Shared.Entities;
@@ -69,7 +67,7 @@ namespace Website.Biz.Managers
             return (StatusCodes.Status200OK, nameof(Message.Success));
         }
 
-        public override async Task<(int statusCode, string message, ParentOutputModel ouput)> GetByIdAsync(int id)
+        public override async Task<(int statusCode, string message, ParentOutputModel output)> GetByIdAsync(int id)
         {
             var entity = await _baseRepository.GetByIdAsync(id);
             if (entity == null)

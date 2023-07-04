@@ -1,6 +1,7 @@
 ﻿using Website.Entity.Model;
 using Website.Shared.Bases.Models;
 using Website.Shared.Entities;
+using Website.Shared.Extensions;
 
 namespace Website.Shared.Models
 {
@@ -26,12 +27,42 @@ namespace Website.Shared.Models
     {
         public ClassRoom MapToEntity()
         {
-            return new ClassRoom();
+            return new ClassRoom()
+            {
+                Name = Name,
+                Description = Description,
+                FromAge = FromAge,
+                ToAge = ToAge,
+                TotalSeats = TotalSeats,
+                Thumbnail = Thumbnail != null ? Thumbnail.ConvertToJson() : null,
+                TutionFee = TutionFee,
+                TutionType = TutionType,
+                FromTime = FromTime,
+                ToTime = ToTime,
+                Index = Index,
+                IsDisplayIndexPage = IsDisplayIndexPage,
+                IsDisplayClassRoomPage = IsDisplayClassRoomPage,
+                Status = Status
+            };
         }
 
-        public ClassRoom MapToEntity(ClassRoom)
+        public ClassRoom MapToEntity(ClassRoom entity)
         {
-            return new ClassRoom();
+            entity.Name = Name;
+            entity.Description = Description;
+            entity.FromAge = FromAge;
+            entity.ToAge = ToAge;
+            entity.TotalSeats = TotalSeats;
+            entity.Thumbnail = Thumbnail != null ? Thumbnail.ConvertToJson() : null;
+            entity.TutionFee = TutionFee;
+            entity.TutionType = TutionType;
+            entity.FromTime = FromTime;
+            entity.ToTime = ToTime;
+            entity.Index = Index;
+            entity.IsDisplayIndexPage = IsDisplayIndexPage;
+            entity.IsDisplayClassRoomPage = IsDisplayClassRoomPage;
+            entity.Status = Status;
+            return entity;
         }
     }
 
@@ -39,7 +70,21 @@ namespace Website.Shared.Models
     {
         public ClassRoomOutputModel(ClassRoom entity)
         {
-
+            Id = entity.Id;
+            Name = entity.Name;
+            Description = entity.Description;
+            FromAge = entity.FromAge;
+            ToAge = entity.ToAge;
+            TotalSeats = entity.TotalSeats;
+            Thumbnail = entity.Thumbnail.ConvertFromJson<FileModel>();
+            TutionFee = entity.TutionFee;
+            TutionType = entity.TutionType;
+            FromTime = entity.FromTime;
+            ToTime = entity.ToTime;
+            Index = entity.Index;
+            IsDisplayIndexPage = entity.IsDisplayIndexPage;
+            IsDisplayClassRoomPage = entity.IsDisplayClassRoomPage;
+            Status = entity.Status;
         }
     }
 }
