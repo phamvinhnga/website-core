@@ -28,7 +28,7 @@ namespace Website.Biz.Managers
             {
                 return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found", null);
             }
-            return (StatusCodes.Status200OK, nameof(Message.Success), entity.JsonMapTo<PostOutputModel>());
+            return (StatusCodes.Status200OK, nameof(Message.Success), new PostOutputModel(entity));
         }
 
         public virtual async Task<(int statusCode, string message)> DeleteAsync(int id)
