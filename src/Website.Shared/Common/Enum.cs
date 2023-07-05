@@ -27,6 +27,13 @@ namespace Website.Shared.Common
 
             [Description("EntityId {0} cannot found")]
             MessageEntityNotFound,
+
+            [Description("The field {0} must be a valid image in base64 format.")]
+            MessageValidImageBase64,
+
+            [Description("The field {{0}} must be an image with a maximum size of {1}MB.")]
+            MessageValidImageMaximumSize,
+
             Success
         }
 

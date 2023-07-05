@@ -4,6 +4,7 @@ using Website.Entity.Models;
 using Microsoft.Extensions.Options;
 using Website.Bal.Interfaces;
 using Website.Shared.Bases.Models;
+using HeyRed.Mime;
 
 namespace Website.Biz.Managers
 {
@@ -24,28 +25,31 @@ namespace Website.Biz.Managers
             {
                 return null;
             }
+
             var reg = "\"data:([^;]*);base64,([^\"]*)\"";
             var matches = Regex.Matches(input, reg, RegexOptions.IgnoreCase);
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), _fileUploadOptions.Path, folder.ToString());
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
             foreach (Match item in matches)
             {
-                var path = _fileUploadOptions.Path;
-                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), _fileUploadOptions.Path);
-                {
-                    path += $"/{folder}";
-                    uploadPath = Path.Combine(uploadPath, folder.ToString());
-                }
-                if (!Directory.Exists(uploadPath))
-                {
-                    Directory.CreateDirectory(uploadPath);
-                }
                 var base64String = item.Groups[2].Value;
                 byte[] fileBytes = Convert.FromBase64String(base64String);
-                var id = $"no_name_{Guid.NewGuid()}{GetTypeFile(item.Groups[0].Value)}".Replace("-", "_");
-                using (var fs = new FileStream($"{uploadPath}/{id}", FileMode.Create))
+                var fileExtension = GetBase64ImageExtension(base64String);
+                var id = $"no_name_{Guid.NewGuid()}{fileExtension}".Replace("-", "_");
+                var filePath = Path.Combine(path, id);
+
+                using (var fs = new FileStream(filePath, FileMode.Create))
                 {
                     fs.Write(fileBytes, 0, fileBytes.Length);
                 }
-                input = input.Replace(item.Value, _fileUploadOptions.SetFullUrl(folder.ToString(), id));
+
+                var replacedValue = _fileUploadOptions.SetFullUrl(folder.ToString(), id);
+                input = input.Replace(item.Value, replacedValue);
             }
 
             return input;
@@ -71,46 +75,35 @@ namespace Website.Biz.Managers
                 result.Id = result.SetId();
             }
 
-            var path = _fileUploadOptions.Path;
-            var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), _fileUploadOptions.Path);
-            {
-                path += $"/{folder}";
-                uploadPath = Path.Combine(uploadPath, folder.ToString());
-            }
+            var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), _fileUploadOptions.Path, folder.ToString());
             if (!Directory.Exists(uploadPath))
             {
                 Directory.CreateDirectory(uploadPath);
             }
 
-            string str = Regex.Replace(file.Url, @"^data:image\/[a-zA-Z]+;base64,", string.Empty);
-            byte[] fileBytes = Convert.FromBase64String(str);
-            using (var fs = new FileStream($"{uploadPath}/{result.Id}", FileMode.Create))
+            string base64Data = Regex.Replace(file.Url, @"^data:image\/[a-zA-Z]+;base64,", string.Empty);
+            byte[] fileBytes = Convert.FromBase64String(base64Data);
+            string filePath = Path.Combine(uploadPath, result.Id);
+            using (var fs = new FileStream(filePath, FileMode.Create))
             {
                 fs.Write(fileBytes, 0, fileBytes.Length);
             }
-            result.Url = string.Format(_fileUploadOptions.Url, folder, result.Id);
+            result.Url = _fileUploadOptions.SetFullUrl(folder.ToString(), result.Id);
             return result;
         }
 
-        private string GetTypeFile(string base64String)
+        private string GetBase64ImageExtension(string base64Image)
         {
-            if (base64String.Contains("data:image/png;base64,"))
+            var mimeType = MimeGuesser.GuessMimeType(base64Image);
+            var extension = MimeTypesMap.GetExtension(mimeType);
+            if (!string.IsNullOrEmpty(extension))
             {
-                return ".png";
+                return "." + extension;
             }
-            else if (base64String.Contains("data:image/jpeg;base64,"))
+            else
             {
-                return ".jpg";
+                return ".unknown";
             }
-            else if (base64String.Contains("data:image/jpg;base64,"))
-            {
-                return ".jpg";
-            }
-            else if (base64String.Contains("data:image/gif;base64,"))
-            {
-                return ".gif";
-            }
-            return string.Empty;
         }
     }
 }
