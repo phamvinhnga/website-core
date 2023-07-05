@@ -2,6 +2,7 @@
 using Serilog;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 using Website.Shared.Common;
 using Website.Shared.Extensions;
 
@@ -29,6 +30,7 @@ namespace Website.Shared.Bases.Attributes
             {
                 return ValidationResult.Success;
             }
+            stringValue = value.ToString().RemoveHeadbase64String();
 
             // Check if the value is a valid base64-encoded image data
             if (IsImageBase64(stringValue))
@@ -36,7 +38,7 @@ namespace Website.Shared.Bases.Attributes
                 // Check if the base64 string has a valid size
                 if (!IsValidImageSize(stringValue))
                 {
-                    return new ValidationResult(string.Format(CoreEnum.Message.MessageValidImageMaximumSize.GetEnumDescription(), validationContext.DisplayName, MaxSizeMb));
+                    return new ValidationResult(string.Format(CoreEnum.Message.MessageValidImageMaximumSize.GetEnumDescription(), MaxSizeMb));
                 }
                 return ValidationResult.Success;
             }
@@ -54,7 +56,8 @@ namespace Website.Shared.Bases.Attributes
         {
             try
             {
-                var mimeType = MimeGuesser.GuessMimeType(base64String);
+                byte[] fileBytes = Convert.FromBase64String(base64String);
+                var mimeType = MimeGuesser.GuessMimeType(fileBytes);
                 return mimeType.StartsWith("image/");
             }
             catch (Exception ex)

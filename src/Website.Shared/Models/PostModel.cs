@@ -37,7 +37,7 @@ namespace Website.Entity.Models
         public Post MapToEntity(Post post)
         {
             post.Id = Id;
-            post.Title = Content;
+            post.Title = Title;
             post.Type = nameof(Folder.Post);
             post.Content = Content;
             post.Summary = Summary;
@@ -66,7 +66,7 @@ namespace Website.Entity.Models
         public PostOutputModel(Post post)
         {
             Id = post.Id;
-            Title = post.Content;
+            Title = post.Title;
             Type = post.Type;
             Content = post.Content;
             Summary = post.Summary;

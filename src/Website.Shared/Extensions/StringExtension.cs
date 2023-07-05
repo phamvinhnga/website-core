@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Website.Shared.Extensions
@@ -37,6 +38,11 @@ namespace Website.Shared.Extensions
                 }
             }
             return str;
+        }
+
+        public static string RemoveHeadbase64String(this string base64String)
+        {
+            return Regex.Replace(base64String, @"^data:image\/[a-zA-Z]+;base64,", string.Empty);
         }
     }
 }
