@@ -15,7 +15,7 @@ namespace Website.Shared.Dtos
         public string Instagram { get; set; }
         [Required]
         public int SpecializedId { get; set; }
-        public FileDto Thumbnail { get; set; }
+        public FileImgeDto Thumbnail { get; set; }
         public int Index { get; set; }
         public bool IsDisplayIndexPage { get; set; }
         public bool IsDisplayTeacherPage { get; set; }
@@ -31,7 +31,7 @@ namespace Website.Shared.Dtos
         public string Twitter { get; set; }
         public string Instagram { get; set; }
         public int SpecializedId { get; set; }
-        public FileDto Thumbnail { get; set; }
+        public FileImgeDto Thumbnail { get; set; }
         public SpecializedDto Specialized { get; set; }
         public DateTime CreateDate { get; set; }
         public int CreateUser { get; set; }

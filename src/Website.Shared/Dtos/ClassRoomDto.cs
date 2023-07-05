@@ -12,7 +12,7 @@ namespace Website.Shared.Dtos
         [Required]
         public int ToAge { get; set; }
         public int TotalSeats { get; set; }
-        public FileDto Thumbnail { get; set; }
+        public FileImgeDto Thumbnail { get; set; }
         public decimal TutionFee { get; set; }
         public string TutionType { get; set; }
         [Required]

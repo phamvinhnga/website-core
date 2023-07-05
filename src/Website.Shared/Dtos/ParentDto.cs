@@ -9,7 +9,7 @@ namespace Website.Shared.Dtos
         public string Name { get; set; }
         public string Profession { get; set; }
         public string Feedback { get; set; }
-        public FileDto Thumbnail { get; set; }
+        public FileImgeDto Thumbnail { get; set; }
         public int Index { get; set; }
         public bool IsDisplayIndexPage { get; set; }
     }
@@ -22,7 +22,7 @@ namespace Website.Shared.Dtos
         public string FullName { get; set; }
         public string Profession { get; set; }
         public string Feedback { get; set; }
-        public FileDto Thumbnail { get; set; }
+        public FileImgeDto Thumbnail { get; set; }
         public DateTime CreateDate { get; set; }
         public int CreateUser { get; set; }
         public int Index { get; set; }

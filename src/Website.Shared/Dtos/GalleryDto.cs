@@ -7,7 +7,7 @@ namespace Website.Shared.Dtos
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public FileDto Thumbnail { get; set; }
+        public FileImgeDto Thumbnail { get; set; }
         [Required]
         public int Index { get; set; }
         [Required]
