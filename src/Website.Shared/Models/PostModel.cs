@@ -24,8 +24,8 @@ namespace Website.Entity.Models
             {
                 Id = Id,
                 Title = Title,
-                Type = nameof(Folder.Post),
                 Content = Content,
+                Type = Type,
                 Summary = Summary,
                 Permalink = Permalink,
                 MetaTitle = MetaTitle,
@@ -38,7 +38,7 @@ namespace Website.Entity.Models
         {
             post.Id = Id;
             post.Title = Title;
-            post.Type = nameof(Folder.Post);
+            post.Type = Type;
             post.Content = Content;
             post.Summary = Summary;
             post.Permalink = Permalink;

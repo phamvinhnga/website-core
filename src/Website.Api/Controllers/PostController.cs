@@ -8,6 +8,7 @@ using Website.Shared.Bases.Models;
 using Website.Shared.Dtos;
 using Website.Shared.Bases.Dtos;
 using Website.Shared.Common;
+using System.Net;
 
 namespace Website.Api.Controllers
 {
@@ -30,6 +31,7 @@ namespace Website.Api.Controllers
 
         [HttpGet("{id}")]
         [AllowAnonymous]
+        [ProducesResponseType(typeof(PostOutputDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             try
@@ -49,13 +51,15 @@ namespace Website.Api.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost("pagination")]
         [ServiceFilter(typeof(AdminRoleFilter))]
-        public async Task<IActionResult> GetListAsync([FromQuery] BasePaginationInputDto input)
+        [ProducesResponseType(typeof(BasePaginationOutputDto<PostOutputDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetListAsync([FromBody] BasePaginationInputDto input)
         {
             try
             {
-                return Ok(await _postManager.GetListAsync(input.JsonMapTo<BasePaginationInputModel>()));
+                var result = await _postManager.GetListAsync(input.JsonMapTo<BasePaginationInputModel>());
+                return Ok(result.JsonMapTo<BasePaginationOutputDto<PostOutputDto>>());
             }
             catch (Exception ex)
             {
@@ -66,6 +70,7 @@ namespace Website.Api.Controllers
 
         [HttpPost]
         [ServiceFilter(typeof(AdminRoleFilter))]
+        [ProducesResponseType(typeof(PostOutputDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateAsync([FromBody] PostInputDto input)
         {
             try
@@ -87,6 +92,7 @@ namespace Website.Api.Controllers
 
         [HttpPut("{id}")]
         [ServiceFilter(typeof(AdminRoleFilter))]
+        [ProducesResponseType(typeof(PostOutputDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] PostInputDto input)
         {
             try
@@ -108,6 +114,7 @@ namespace Website.Api.Controllers
 
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(AdminRoleFilter))]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             try
