@@ -5,6 +5,7 @@ using Website.Shared.Bases.Models;
 using Website.Shared.Models;
 using Website.Dal.Interfaces;
 using Website.Shared.Extensions;
+using Website.Dal.Repositories;
 
 namespace Website.Bal.Managers
 {
@@ -79,6 +80,19 @@ namespace Website.Bal.Managers
             {
                 return (StatusCodes.Status404NotFound, string.Format(Message.MessageEntityNotFound.GetEnumDescription(), id));
             }
+            return (StatusCodes.Status200OK, nameof(Message.Success));
+        }
+
+        public async Task<(int statusCode, string message)> SetIsDisplayGalleryPageAsync(int id, bool isDisplayGalleryPage, int userId)
+        {
+            var entity = await _galleryRepository.GetByIdAsync(id);
+            if (entity == null)
+            {
+                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found");
+            }
+            entity.IsDisplayGalleryPage = isDisplayGalleryPage;
+            entity.SetModifyDefault(userId);
+            await _galleryRepository.UpdateAsync(entity);
             return (StatusCodes.Status200OK, nameof(Message.Success));
         }
     }

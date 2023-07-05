@@ -64,7 +64,7 @@ namespace Website.Api.Controllers
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("index-page/{id}")]
         public async Task<IActionResult> SetIsDisplayIndexPageAsync([Required] int id, bool isDisplayIndexPage)
         {
             try
@@ -84,7 +84,7 @@ namespace Website.Api.Controllers
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("class-room-page/{id}")]
         public async Task<IActionResult> SetIsDisplayClassRoomPageAsync([Required] int id, bool isDisplayClassRoomPage)
         {
             try

@@ -9,6 +9,8 @@ using Website.Shared.Bases.Dtos;
 using Website.Shared.Common;
 using Website.Shared.Dtos;
 using Website.Shared.Models;
+using System.ComponentModel.DataAnnotations;
+using Website.Bal.Managers;
 
 namespace Website.Api.Controllers
 {
@@ -110,6 +112,26 @@ namespace Website.Api.Controllers
             try
             {
                 (int statusCode, string message) = await _galleryManager.DeleteAsync(id);
+                if (statusCode != StatusCodes.Status200OK)
+                {
+                    _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
+                    return StatusCode(statusCode, new { message = message });
+                }
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, CoreEnum.Message.MessageError.GetEnumDescription(), ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
+        
+        [HttpPut("gallery-page/{id}")]
+        public async Task<IActionResult> SetIsDisplayIndexPageAsync([Required] int id, bool isDisplayIndexPage)
+        {
+            try
+            {
+                (int statusCode, string message) = await _galleryManager.SetIsDisplayGalleryPageAsync(id, isDisplayIndexPage, User.Claims.GetUserId());
                 if (statusCode != StatusCodes.Status200OK)
                 {
                     _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
