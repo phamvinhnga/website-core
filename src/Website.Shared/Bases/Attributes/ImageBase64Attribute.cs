@@ -14,7 +14,6 @@ namespace Website.Shared.Bases.Attributes
 
         public ImageBase64Attribute()
         {
-            MaxSizeMb = 50;
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
