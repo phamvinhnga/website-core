@@ -60,7 +60,7 @@ namespace Website.Biz.Managers
             var entity = await _postRepository.GetByIdAsync(id);
             if (entity == null)
             {
-                return (StatusCodes.Status404NotFound, $"EntitEntityId cannot found", null);
+                return (StatusCodes.Status404NotFound, $"EntityId cannot found", null);
             }
             if (input.Thumbnail != null && string.IsNullOrEmpty(input.Thumbnail.Id))
             {
