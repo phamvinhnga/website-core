@@ -9,7 +9,7 @@ using Website.Bal.Bases.Interfaces;
 
 namespace Website.Dal.Bases.Managers
 {
-    public abstract class BaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey> : IBaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey>
+    public class BaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey> : IBaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey>
         where TEntity : BaseEntity<TPrimaryKey>
         where TInputModel : class
         where TOutputModel : class

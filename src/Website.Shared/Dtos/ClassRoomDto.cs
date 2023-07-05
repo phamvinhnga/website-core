@@ -31,11 +31,11 @@ namespace Website.Shared.Dtos
 
     public class ClassRoomInputDto : ClassRoomDto
     {
-
+        public ClassRoomInputDto() { }
     }
 
     public class ClassRoomOutputDto : ClassRoomDto
     {
-
+        public ClassRoomOutputDto() { }
     }
 }
