@@ -36,7 +36,9 @@ namespace Website.Api.Services.ServiceBuilders
             }
 
             Log.Logger = loggerConfiguration
+                .MinimumLevel.Verbose()
                 .WriteTo.Console()
+                .Enrich.FromLogContext()
                 .CreateLogger();
         }
     }
