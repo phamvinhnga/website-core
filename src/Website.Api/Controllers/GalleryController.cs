@@ -53,7 +53,7 @@ namespace Website.Api.Controllers
         }
 
         [HttpPost("pagination")]
-        public async Task<IActionResult> GetListAsync([FromQuery] BasePaginationInputDto input)
+        public async Task<IActionResult> GetListAsync([FromBody] BasePaginationInputDto input)
         {
             try
             {
