@@ -16,40 +16,11 @@ namespace Website.Shared.Models
 
     public class FacilityInputModel : FacilityModel
     {
-        public Facility MapToEntity()
-        {
-            return new Facility
-            {
-                Id = Id,
-                Name = Name,
-                Description = Description,
-                Thumbnail = Thumbnail != null ? Thumbnail.ConvertToJson() : null,
-                Index = Index,
-                IsDisplayIndexPage = IsDisplayIndexPage
-            };
-        }
-
-        public Facility MapToEntity(Facility entity)
-        {
-            entity.Name = Name;
-            entity.Thumbnail = Thumbnail != null ? Thumbnail.ConvertToJson() : null;
-            entity.Description = Description;
-            entity.Index = Index;
-            entity.IsDisplayIndexPage = IsDisplayIndexPage;
-            return entity;
-        }
+        public FacilityInputModel() { }
     }
 
     public class FacilityOutputModel : FacilityModel
     {
-        public FacilityOutputModel(Facility entity)
-        {
-            Id = entity.Id;
-            Name = entity.Name;
-            Thumbnail = Thumbnail != null ? entity.Thumbnail.ConvertFromJson<FileModel>() : null;
-            Index = entity.Index;
-            Description = entity.Description;
-            IsDisplayIndexPage = entity.IsDisplayIndexPage;
-        }
+        public FacilityOutputModel() { }
     }
 }

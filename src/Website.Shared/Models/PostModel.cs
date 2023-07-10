@@ -17,36 +17,6 @@ namespace Website.Entity.Models
         public string MetaTitle { get; set; }
         public string MetaDescription { get; set; }
         public FileModel Thumbnail { get; set; }
-
-        public Post MapToEntity()
-        {
-            return new Post()
-            {
-                Id = Id,
-                Title = Title,
-                Content = Content,
-                Type = Type,
-                Summary = Summary,
-                Permalink = Permalink,
-                MetaTitle = MetaTitle,
-                MetaDescription = MetaDescription,
-                Thumbnail = Thumbnail != null ? Thumbnail.ConvertToJson() : null,
-            };
-        }
-
-        public Post MapToEntity(Post post)
-        {
-            post.Id = Id;
-            post.Title = Title;
-            post.Type = Type;
-            post.Content = Content;
-            post.Summary = Summary;
-            post.Permalink = Permalink;
-            post.MetaTitle = MetaTitle;
-            post.MetaDescription = MetaDescription;
-            post.Thumbnail = Thumbnail != null ? Thumbnail.ConvertToJson() : null;
-            return post;
-        }
     }
 
     public class PostOutputModel
@@ -62,20 +32,5 @@ namespace Website.Entity.Models
         public string MetaTitle { get; set; }
         public string MetaDescription { get; set; }
         public int CreateUser { get; set; }
-
-        public PostOutputModel(Post post)
-        {
-            Id = post.Id;
-            Title = post.Title;
-            Type = post.Type;
-            Content = post.Content;
-            Summary = post.Summary;
-            Permalink = post.Permalink;
-            MetaTitle = post.MetaTitle;
-            MetaDescription = post.MetaDescription;
-            Thumbnail = post.Thumbnail.ConvertFromJson<FileModel>();
-            CreateDate = post.CreateDate;
-            CreateUser = post.CreateUser;
-        }
     }
 }

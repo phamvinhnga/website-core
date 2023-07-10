@@ -1,109 +1,68 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Website.Bal.Interfaces;
-using Website.Dal.Interfaces;
+using Website.Dal.Bases.Managers;
+using Website.Dal.UnitOfWorks;
 using Website.Entity.Models;
-using Website.Shared.Bases.Models;
+using Website.Shared.Entities;
 using static Website.Shared.Common.CoreEnum;
 
 namespace Website.Biz.Managers
 {
-    public class TeacherManager : ITeacherManager
+    public class TeacherManager : BaseManager<Teacher, TeacherInputModel, TeacherOutputModel, int>, ITeacherManager
     {
-        private readonly ITeacherRepository _parentRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IFileManager _fileManager;
 
         public TeacherManager(
             IFileManager fileManager,
-            ITeacherRepository parentRepository
-        ) 
+            IMapper mapper,
+            IUnitOfWork unitOfWork
+        ) : base(unitOfWork, mapper)
         {
-            _parentRepository = parentRepository;
+            _unitOfWork = unitOfWork;
             _fileManager = fileManager;
         }
 
-        public async Task<(int statusCode, string message, TeacherOutputModel output)> CreateAsync(TeacherInputModel input, int userId)
+        public override async Task<(int statusCode, string message, TeacherOutputModel output)> CreateAsync(TeacherInputModel input, int userId)
         {
             if (input.Thumbnail != null && string.IsNullOrEmpty(input.Thumbnail.Id))
             {
                 input.Thumbnail = _fileManager.Upload(input.Thumbnail, Folder.Teacher);
             }
-            var entity = input.MapToEntity();
-            entity.SetCreateDefault(userId);
-            await _parentRepository.CreateAsync(entity);
-            return (StatusCodes.Status200OK, nameof(Message.Success), new TeacherOutputModel(entity));
+            return await base.CreateAsync(input, userId);
         }
 
-        public async Task<(int statusCode, string message, TeacherOutputModel output)> UpdateAsync(int id, TeacherInputModel input, int userId)
+        public override async Task<(int statusCode, string message, TeacherOutputModel output)> UpdateAsync(int id, TeacherInputModel input, int userId)
         {
-            var entity = await _parentRepository.GetByIdAsync(id);
-            if (entity == null)
-            {
-                return (StatusCodes.Status404NotFound, $"TeacherId {id} cannot found", null);
-            }
-
             if (input.Thumbnail != null && string.IsNullOrEmpty(input.Thumbnail.Id))
             {
                 input.Thumbnail = _fileManager.Upload(input.Thumbnail, Folder.Teacher);
             }
-            entity = input.MapToEntity(entity);
-            entity.SetModifyDefault(userId);
-   
-            await _parentRepository.UpdateAsync(entity);
-            return (StatusCodes.Status200OK, nameof(Message.Success), new TeacherOutputModel(entity));
+            return await base.UpdateAsync(id, input, userId);
         }
 
-        public async Task<(int statusCode, string message)> SetIsDisplayIndexPageAsync(int id, bool isDisplayIndexPage)
+        public async Task<(int statusCode, string message)> SetIsDisplayIndexPageAsync(int id, bool isDisplayIndexPage, int userId)
         {
-            var entity = await _parentRepository.GetByIdAsync(id);
-            if (entity == null)
-            {
-                return (StatusCodes.Status404NotFound, $"TeacherId {id} cannot found");
-            }
-            entity.IsDisplayIndexPage = isDisplayIndexPage;
-            await _parentRepository.UpdateAsync(entity);
-            return (StatusCodes.Status200OK, nameof(Message.Success));
-        }
-        
-        public async Task<(int statusCode, string message)> SetIsDisplayTeacherPageAsync(int id, bool isDisplayTeacherPage)
-        {
-            var entity = await _parentRepository.GetByIdAsync(id);
-            if (entity == null)
-            {
-                return (StatusCodes.Status404NotFound, $"TeacherId {id} cannot found");
-            }
-            entity.IsDisplayTeacherPage = isDisplayTeacherPage;
-            await _parentRepository.UpdateAsync(entity);
-            return (StatusCodes.Status200OK, nameof(Message.Success));
-        }
-        
-        public async Task<(int statusCode, string message, TeacherOutputModel output)> GetByIdAsync(int id)
-        {
-            var entity = await _parentRepository.GetByIdAsync(id);
-            if (entity == null)
-            {
-                return (StatusCodes.Status404NotFound, $"TeacherId {id} cannot found", null);
-            }
-            return (StatusCodes.Status200OK, nameof(Message.Success), new TeacherOutputModel(entity));
-        }
-
-        public async Task<BasePaginationOutputModel<TeacherOutputModel>> GetListAsync(BasePaginationInputModel input)
-        {
-            var data = await _parentRepository.GetListAsync(input);
-            return new BasePaginationOutputModel<TeacherOutputModel>()
-            {
-                TotalCount = data.TotalCount,
-                Items = data.Items.Select(s => new TeacherOutputModel(s)).ToList()
-            };
-        }
-
-        public async Task<(int statusCode, string message)> DeleteAsync(int id)
-        {
-            var entity = await _parentRepository.GetByIdAsync(id);
+            var entity = await _unitOfWork.TeacherRepository.GetByIdAsync(id);
             if (entity == null)
             {
                 return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found");
             }
-            await _parentRepository.DeleteAsync(entity);
+            entity.IsDisplayIndexPage = isDisplayIndexPage;
+            await _unitOfWork.CompleteAsync();
+            return (StatusCodes.Status200OK, nameof(Message.Success));
+        }
+        
+        public async Task<(int statusCode, string message)> SetIsDisplayTeacherPageAsync(int id, bool isDisplayTeacherPage, int userId)
+        {
+            var entity = await _unitOfWork.TeacherRepository.GetByIdAsync(id);
+            if (entity == null)
+            {
+                return (StatusCodes.Status404NotFound, $"EntityId {id} cannot found");
+            }
+            entity.IsDisplayTeacherPage = isDisplayTeacherPage;
+            await _unitOfWork.CompleteAsync();
             return (StatusCodes.Status200OK, nameof(Message.Success));
         }
     }

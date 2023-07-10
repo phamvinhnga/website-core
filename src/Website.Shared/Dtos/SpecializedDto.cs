@@ -9,11 +9,11 @@ namespace Website.Shared.Dtos
 
     public class SpecializedInputDto : SpecializedDto
     {
-
+        public SpecializedInputDto() { }
     }
 
     public class SpecializedOutputDto : BaseModel<int>
     {
-
+        public SpecializedOutputDto() { }
     }
 }

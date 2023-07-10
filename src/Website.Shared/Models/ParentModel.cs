@@ -14,33 +14,6 @@ namespace Website.Entity.Models
         public FileModel Thumbnail { get; set; }
         public int Index { get; set; }
         public bool IsDisplayIndexPage { get; set; }
-
-        public Parent MapToEntity()
-        {
-            return new Parent()
-            {
-                Id = Id,
-                Surname = Surname,
-                Name = Name,
-                Profession = Profession,
-                Feedback = Feedback,
-                IsDisplayIndexPage = IsDisplayIndexPage,
-                Index = Index,
-                Thumbnail = Thumbnail != null ? Thumbnail.ConvertToJson() : null,
-            };
-        }
-        public Parent MapToEntity(Parent enity)
-        {
-            enity.Id = Id;
-            enity.Surname = Surname;
-            enity.Name = Name;
-            enity.Profession = Profession;
-            enity.Feedback = Feedback;
-            enity.IsDisplayIndexPage = IsDisplayIndexPage;
-            enity.Index = Index;
-            enity.Thumbnail = Thumbnail != null ? Thumbnail.ConvertToJson() : null;
-            return enity;
-        }
     }
 
     public class ParentOutputModel
@@ -56,20 +29,5 @@ namespace Website.Entity.Models
         public int CreateUser { get; set; }        
         public int Index { get; set; }
         public bool IsDisplayIndexPage { get; set; }
-
-        public ParentOutputModel(Parent entity)
-        {
-            Id = entity.Id;
-            Surname = entity.Surname;
-            Name = entity.Name;
-            FullName = entity.FullName;
-            Profession = entity.Profession;
-            Feedback = entity.Feedback;
-            Thumbnail = entity.Thumbnail.ConvertFromJson<FileModel>();
-            CreateDate = entity.CreateDate;
-            CreateUser = entity.CreateUser;
-            Index = entity.Index;
-            IsDisplayIndexPage = entity.IsDisplayIndexPage;
-        }
     }
 }

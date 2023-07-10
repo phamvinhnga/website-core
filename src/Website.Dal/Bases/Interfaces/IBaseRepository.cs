@@ -8,10 +8,10 @@ namespace Website.Dal.Bases.Interfaces
         where TPrimaryKey : struct
     {
         IQueryable<TEntity> Queryable { get; }
-        Task<TEntity> CreateAsync(TEntity entity, bool saveChanges = true);
-        Task<TEntity> UpdateAsync(TEntity input, bool saveChanges = true);
+        Task<TEntity> CreateAsync(TEntity entity);
+        Task<TEntity> UpdateAsync(TEntity input);
         Task<TEntity> GetByIdAsync(TPrimaryKey id);
-        Task DeleteAsync(TEntity entity, bool saveChanges = true);
+        Task DeleteAsync(TEntity entity);
         Task<BasePaginationOutputModel<TEntity>> GetListAsync(BasePaginationInputModel input);
     }
 }

@@ -25,66 +25,13 @@ namespace Website.Shared.Models
 
     public class ClassRoomInputModel : ClassRoomModel
     {
-        public ClassRoom MapToEntity()
-        {
-            return new ClassRoom()
-            {
-                Name = Name,
-                Description = Description,
-                FromAge = FromAge,
-                ToAge = ToAge,
-                TotalSeats = TotalSeats,
-                Thumbnail = Thumbnail != null ? Thumbnail.ConvertToJson() : null,
-                TutionFee = TutionFee,
-                TutionType = TutionType,
-                FromTime = FromTime,
-                ToTime = ToTime,
-                Index = Index,
-                IsDisplayIndexPage = IsDisplayIndexPage,
-                IsDisplayClassRoomPage = IsDisplayClassRoomPage,
-                Status = Status
-            };
-        }
-
-        public ClassRoom MapToEntity(ClassRoom entity)
-        {
-            entity.Name = Name;
-            entity.Description = Description;
-            entity.FromAge = FromAge;
-            entity.ToAge = ToAge;
-            entity.TotalSeats = TotalSeats;
-            entity.Thumbnail = Thumbnail != null ? Thumbnail.ConvertToJson() : null;
-            entity.TutionFee = TutionFee;
-            entity.TutionType = TutionType;
-            entity.FromTime = FromTime;
-            entity.ToTime = ToTime;
-            entity.Index = Index;
-            entity.IsDisplayIndexPage = IsDisplayIndexPage;
-            entity.IsDisplayClassRoomPage = IsDisplayClassRoomPage;
-            entity.Status = Status;
-            return entity;
-        }
+        public ClassRoomInputModel() { }
     }
 
     public class ClassRoomOutputModel : ClassRoomModel
     {
-        public ClassRoomOutputModel(ClassRoom entity)
+        public ClassRoomOutputModel()
         {
-            Id = entity.Id;
-            Name = entity.Name;
-            Description = entity.Description;
-            FromAge = entity.FromAge;
-            ToAge = entity.ToAge;
-            TotalSeats = entity.TotalSeats;
-            Thumbnail = entity.Thumbnail.ConvertFromJson<FileModel>();
-            TutionFee = entity.TutionFee;
-            TutionType = entity.TutionType;
-            FromTime = entity.FromTime;
-            ToTime = entity.ToTime;
-            Index = entity.Index;
-            IsDisplayIndexPage = entity.IsDisplayIndexPage;
-            IsDisplayClassRoomPage = entity.IsDisplayClassRoomPage;
-            Status = entity.Status;
         }
     }
 }

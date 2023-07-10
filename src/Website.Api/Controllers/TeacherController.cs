@@ -132,7 +132,7 @@ namespace Website.Api.Controllers
         {
             try
             {
-                (int statusCode, string message) = await _teacherManager.SetIsDisplayIndexPageAsync(id, isDisplayIndexPage);
+                (int statusCode, string message) = await _teacherManager.SetIsDisplayIndexPageAsync(id, isDisplayIndexPage, User.Claims.GetUserId());
                 if (statusCode != StatusCodes.Status200OK)
                 {
                     _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
@@ -152,7 +152,7 @@ namespace Website.Api.Controllers
         {
             try
             {
-                (int statusCode, string message) = await _teacherManager.SetIsDisplayTeacherPageAsync(id, isDisplayTeacherPage);
+                (int statusCode, string message) = await _teacherManager.SetIsDisplayTeacherPageAsync(id, isDisplayTeacherPage, User.Claims.GetUserId());
                 if (statusCode != StatusCodes.Status200OK)
                 {
                     _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);

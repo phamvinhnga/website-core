@@ -21,24 +21,19 @@ namespace Website.Dal.Bases.Repository
 
         public IQueryable<TEntity> Queryable => _dbSet;
 
-        public virtual async Task<TEntity> CreateAsync(TEntity entity, bool saveChanges = true)
+        public virtual async Task<TEntity> CreateAsync(TEntity entity)
         {
             await _dbSet.AddAsync(entity);
-            if (saveChanges)
-            {
-                await _dbContext.SaveChangesAsync();
-            }
             return entity;
         }
 
-        public virtual async Task<TEntity> UpdateAsync(TEntity input, bool saveChanges = true)
+        public virtual async Task<TEntity> UpdateAsync(TEntity input)
         {
-            _dbContext.Attach(input);
-            _dbContext.Entry(input).State = EntityState.Modified;
-            if (saveChanges)
+            await Task.Run(() =>
             {
-                await _dbContext.SaveChangesAsync();
-            }
+                _dbContext.Attach(input);
+                _dbContext.Entry(input).State = EntityState.Modified;
+            });
             return input;
         }
 
@@ -47,14 +42,12 @@ namespace Website.Dal.Bases.Repository
             return await _dbSet.FindAsync(id);
         }
 
-        public virtual async Task DeleteAsync(TEntity entity, bool saveChanges = true)
+        public virtual async Task DeleteAsync(TEntity entity)
         {
-            _dbSet.Remove(entity);
-
-            if (saveChanges)
+            await Task.Run(() =>
             {
-                await _dbContext.SaveChangesAsync();
-            }
+                _dbSet.Remove(entity);
+            });
         }
 
         public virtual async Task<BasePaginationOutputModel<TEntity>> GetListAsync(BasePaginationInputModel input)
