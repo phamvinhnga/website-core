@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Website.Bal.Bases.Interfaces;
+using Website.Dal.Bases.Managers;
 using Website.Shared.Bases.Dtos;
 using Website.Shared.Bases.Entities;
 using Website.Shared.Bases.Models;
@@ -9,8 +10,9 @@ using Website.Shared.Extensions;
 namespace Website.Api.Base.Controllers
 {
     [ApiController]
-    public abstract class CrudController<TController, TEntity, TInputDto, TOutputDto, TInputModel, TOutputModel, TPrimaryKey> : ControllerBase
+    public abstract class CrudController<TController, TManager, TEntity, TInputDto, TOutputDto, TInputModel, TOutputModel, TPrimaryKey> : ControllerBase
         where TController : class
+        where TManager : BaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey>
         where TEntity : BaseEntity<TPrimaryKey>
         where TInputDto : class
         where TOutputDto : class
@@ -18,16 +20,17 @@ namespace Website.Api.Base.Controllers
         where TOutputModel : class
         where TPrimaryKey : struct
     {
-        private readonly IBaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey> _baseManager;
+        //private readonly IBaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey> _manager;
+        private readonly TManager _manager;
         private readonly ILogger<TController> _logger;
 
         protected CrudController(
-            IBaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey> baseManager,
+            TManager manager,
             ILogger<TController> logger
         )
         {
             _logger = logger;
-            _baseManager = baseManager;
+            _manager = manager;
         }
 
         [HttpGet("{id}")]
@@ -35,7 +38,7 @@ namespace Website.Api.Base.Controllers
         {
             try
             {
-                (int statusCode, string message, var output) = await _baseManager.GetByIdAsync(id);
+                (int statusCode, string message, var output) = await _manager.GetByIdAsync(id);
                 if (statusCode != StatusCodes.Status200OK)
                 {
                     _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
@@ -55,7 +58,7 @@ namespace Website.Api.Base.Controllers
         {
             try
             {
-                return Ok(await _baseManager.GetListAsync(input.JsonMapTo<BasePaginationInputModel>()));
+                return Ok(await _manager.GetListAsync(input.JsonMapTo<BasePaginationInputModel>()));
             }
             catch (Exception ex)
             {
@@ -69,7 +72,7 @@ namespace Website.Api.Base.Controllers
         {
             try
             {
-                (int statusCode, string message, var output) = await _baseManager.CreateAsync(input.JsonMapTo<TInputModel>(), User.Claims.GetUserId());
+                (int statusCode, string message, var output) = await _manager.CreateAsync(input.JsonMapTo<TInputModel>(), User.Claims.GetUserId());
                 if (statusCode != StatusCodes.Status200OK)
                 {
                     _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
@@ -89,7 +92,7 @@ namespace Website.Api.Base.Controllers
         {
             try
             {
-                (int statusCode, string message, var output) = await _baseManager.UpdateAsync(id, input.JsonMapTo<TInputModel>(), User.Claims.GetUserId());
+                (int statusCode, string message, var output) = await _manager.UpdateAsync(id, input.JsonMapTo<TInputModel>(), User.Claims.GetUserId());
                 if (statusCode != StatusCodes.Status200OK)
                 {
                     _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);
@@ -109,7 +112,7 @@ namespace Website.Api.Base.Controllers
         {
             try
             {
-                (int statusCode, string message) = await _baseManager.DeleteAsync(id);
+                (int statusCode, string message) = await _manager.DeleteAsync(id);
                 if (statusCode != StatusCodes.Status200OK)
                 {
                     _logger.LogWarning(CoreEnum.Message.MessageError.GetEnumDescription(), message);

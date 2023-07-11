@@ -1,7 +1,6 @@
 ﻿using Website.Dal.Bases.Interfaces;
 using Website.Dal.Bases.Repository;
 using Website.Dal.Interfaces;
-using Website.Entity.Repositories;
 using Website.Shared.Bases.Entities;
 
 namespace Website.Dal.UnitOfWorks
@@ -17,6 +16,7 @@ namespace Website.Dal.UnitOfWorks
         public IGalleryRepository GalleryRepository { get; private set; }
         public IFacilityRepository FacilityRepository { get; private set; }
         public IClassRoomRepository ClassRoomRepository { get; private set; }
+        public ISpecializedRepository SpecializedRepository { get; private set; }
 
         public UnitOfWork(
             ApplicationDbContext context,
@@ -25,6 +25,7 @@ namespace Website.Dal.UnitOfWorks
             ITeacherRepository teacherRepository,
             IFacilityRepository facilityRepository,
             IGalleryRepository galleryRepository,
+            ISpecializedRepository specializedRepository,
             IClassRoomRepository classRoomRepository
             )
         {
@@ -36,6 +37,7 @@ namespace Website.Dal.UnitOfWorks
             FacilityRepository = facilityRepository;
             GalleryRepository = galleryRepository;
             ClassRoomRepository = classRoomRepository;
+            SpecializedRepository = specializedRepository;
         }
 
         public IBaseRepository<TEntity, TPrimaryKey> GetRepository<TEntity, TPrimaryKey>() where TEntity : BaseEntity<TPrimaryKey> where TPrimaryKey : struct

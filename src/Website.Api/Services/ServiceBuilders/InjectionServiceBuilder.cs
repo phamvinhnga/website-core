@@ -7,6 +7,7 @@ using Website.Dal.Bases.Managers;
 using Website.Dal.Bases.Repository;
 using Website.Dal.Interfaces;
 using Website.Dal.Repositories;
+using Website.Dal.UnitOfWorks;
 using Website.Entity.Models;
 using Website.Entity.Repositories;
 using Website.Shared.Entities;
@@ -18,12 +19,17 @@ namespace Website.Api.Services.ServiceBuilders
     {
         internal static void UseInjectionServiceBuilder(this IServiceCollection services, IConfiguration configuration)
         {
+
             services.AddTransient<IAuthManager, AuthManager>();
             services.AddTransient<IFileManager, FileManager>();
 
             // class room
             services.AddTransient<IClassRoomManager, ClassRoomManager>();
             services.AddTransient<IClassRoomRepository, ClassRoomRepository>();
+
+            // Facility
+            services.AddTransient<IFacilityManager, FacilityManager>();
+            services.AddTransient<IFacilityRepository, FacilityRepository>();
 
             // gallery
             services.AddTransient<IGalleryManager, GalleryManager>();
@@ -42,13 +48,14 @@ namespace Website.Api.Services.ServiceBuilders
             services.AddTransient<ITeacherRepository, TeacherRepository>();
 
             // Specialized
-            services.AddTransient<IBaseManager<Specialized, SpecializedInputModel, SpecializedOutputModel, int>, BaseManager<Specialized, SpecializedInputModel, SpecializedOutputModel, int>>();
-            services.AddTransient<IBaseRepository<Specialized, int>, BaseRepository<Specialized, int>>();
             services.AddTransient<ISpecializedRepository, SpecializedRepository>();
+            services.AddTransient<ISpecializedManager, SpecializedManager>();
 
-            // category
-            services.AddTransient<IBaseManager<Category, CategoryInputModel, CategoryOutputModel, int>, BaseManager<Category, CategoryInputModel, CategoryOutputModel, int>>();
-            services.AddTransient<IBaseRepository<Category, int>, BaseRepository<Category, int>>();
+            //// category
+            services.AddTransient<ICategoryManager, CategoryManager>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
     }
 }

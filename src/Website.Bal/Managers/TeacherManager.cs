@@ -24,7 +24,7 @@ namespace Website.Biz.Managers
             _fileManager = fileManager;
         }
 
-        public override async Task<(int statusCode, string message, TeacherOutputModel output)> CreateAsync(TeacherInputModel input, int userId)
+        public new async Task<(int statusCode, string message, TeacherOutputModel output)> CreateAsync(TeacherInputModel input, int userId)
         {
             if (input.Thumbnail != null && string.IsNullOrEmpty(input.Thumbnail.Id))
             {
@@ -33,7 +33,7 @@ namespace Website.Biz.Managers
             return await base.CreateAsync(input, userId);
         }
 
-        public override async Task<(int statusCode, string message, TeacherOutputModel output)> UpdateAsync(int id, TeacherInputModel input, int userId)
+        public new async Task<(int statusCode, string message, TeacherOutputModel output)> UpdateAsync(int id, TeacherInputModel input, int userId)
         {
             if (input.Thumbnail != null && string.IsNullOrEmpty(input.Thumbnail.Id))
             {

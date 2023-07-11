@@ -26,7 +26,7 @@ namespace Website.Biz.Managers
             _mapper = mapper;
         }
 
-        public override async Task<(int statusCode, string message, PostOutputModel output)> CreateAsync(PostInputModel input, int userId)
+        public new async Task<(int statusCode, string message, PostOutputModel output)> CreateAsync(PostInputModel input, int userId)
         {
             if (input.Thumbnail != null && string.IsNullOrEmpty(input.Thumbnail.Id))
             {
@@ -36,7 +36,7 @@ namespace Website.Biz.Managers
             return await base.CreateAsync(input, userId);
         }
 
-        public override async Task<(int statusCode, string message, PostOutputModel output)> UpdateAsync(int id, PostInputModel input, int userId)
+        public new async Task<(int statusCode, string message, PostOutputModel output)> UpdateAsync(int id, PostInputModel input, int userId)
         {
             if (input.Thumbnail != null && string.IsNullOrEmpty(input.Thumbnail.Id))
             {

@@ -9,7 +9,7 @@ using Website.Dal.UnitOfWorks;
 
 namespace Website.Dal.Bases.Managers
 {
-    public abstract class BaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey> : IBaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey>
+    public class BaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey> : IBaseManager<TEntity, TInputModel, TOutputModel, TPrimaryKey>
         where TEntity : BaseEntity<TPrimaryKey>
         where TInputModel : class
         where TOutputModel : class
@@ -29,7 +29,7 @@ namespace Website.Dal.Bases.Managers
 
         public virtual async Task<(int statusCode, string message, TOutputModel output)> CreateAsync(TInputModel input, int userId)
         {
-            var entity = input.JsonMapTo<TEntity>();
+            var entity = _mapper.Map<TInputModel, TEntity>(input);
             entity.SetCreateDefault(userId);
             await _unitOfWork.GetRepository<TEntity, TPrimaryKey>().CreateAsync(entity);
             await _unitOfWork.CompleteAsync();

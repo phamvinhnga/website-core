@@ -1,12 +1,11 @@
 ﻿using Website.Api.Filters;
-using Website.Entity.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Website.Shared.Dtos;
 using Website.Api.Base.Controllers;
 using Website.Shared.Entities;
-using Website.Bal.Bases.Interfaces;
 using Website.Shared.Models;
+using Website.Bal.Managers;
 
 namespace Website.Api.Controllers
 {
@@ -14,12 +13,9 @@ namespace Website.Api.Controllers
     [ApiController]
     [Authorize]
     [ServiceFilter(typeof(AdminRoleFilter))]
-    public class CategoryController : CrudController<CategoryController, Category, CategoryInputDto, CategoryOutputDto, CategoryInputModel, CategoryOutputModel, int>
+    public class CategoryController : CrudController<CategoryController, CategoryManager, Category, CategoryInputDto, CategoryOutputDto, CategoryInputModel, CategoryOutputModel, int>
     {
-        public CategoryController(
-            IBaseManager<Category, CategoryInputModel, CategoryOutputModel, int> baseManager,
-            ILogger<CategoryController> logger
-        ) : base (baseManager, logger)
+        public CategoryController(CategoryManager manager, ILogger<CategoryController> logger) : base(manager, logger)
         {
         }
     }

@@ -34,7 +34,7 @@ namespace Website.Bal.Managers
             _fileManager = fileManager;
         }
 
-        public override async Task<(int statusCode, string message, FacilityOutputModel output)> CreateAsync(FacilityInputModel input, int userId)
+        public new async Task<(int statusCode, string message, FacilityOutputModel output)> CreateAsync(FacilityInputModel input, int userId)
         {
             if (input.Thumbnail != null && string.IsNullOrEmpty(input.Thumbnail.Id))
             {
@@ -43,7 +43,7 @@ namespace Website.Bal.Managers
             return await base.CreateAsync(input, userId);
         }
 
-        public override async Task<(int statusCode, string message, FacilityOutputModel output)> UpdateAsync(int id, FacilityInputModel input, int userId)
+        public new async Task<(int statusCode, string message, FacilityOutputModel output)> UpdateAsync(int id, FacilityInputModel input, int userId)
         {
             if (input.Thumbnail != null && string.IsNullOrEmpty(input.Thumbnail.Id))
             {

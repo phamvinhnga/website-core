@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Website.Bal.Interfaces;
 using Website.Dal.Bases.Managers;
-using Website.Dal.Interfaces;
 using Website.Dal.UnitOfWorks;
-using Website.Shared.Bases.Models;
 using Website.Shared.Entities;
 using Website.Shared.Models;
 using static Website.Shared.Common.CoreEnum;
@@ -26,7 +24,7 @@ namespace Website.Bal.Managers
             _fileManager = fileManager;
         }
 
-        public override async Task<(int statusCode, string message, ClassRoomOutputModel output)> CreateAsync(ClassRoomInputModel input, int userId)
+        public new async Task<(int statusCode, string message, ClassRoomOutputModel output)> CreateAsync(ClassRoomInputModel input, int userId)
         {
             if (input.Thumbnail != null && string.IsNullOrEmpty(input.Thumbnail.Id))
             {
@@ -35,7 +33,7 @@ namespace Website.Bal.Managers
             return await base.CreateAsync(input, userId);
         }
 
-        public override async Task<(int statusCode, string message, ClassRoomOutputModel output)> UpdateAsync(int id, ClassRoomInputModel input, int userId)
+        public new async Task<(int statusCode, string message, ClassRoomOutputModel output)> UpdateAsync(int id, ClassRoomInputModel input, int userId)
         {
             if (input.Thumbnail != null && string.IsNullOrEmpty(input.Thumbnail.Id))
             {
@@ -66,6 +64,7 @@ namespace Website.Bal.Managers
             }
             entity.IsDisplayClassRoomPage = isDisplayClassRoomPage;
             entity.SetModifyDefault(userId);
+            await _unitOfWork.CompleteAsync();
             return (StatusCodes.Status200OK, nameof(Message.Success));
         }
     }

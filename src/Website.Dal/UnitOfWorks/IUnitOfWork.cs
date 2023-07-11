@@ -12,6 +12,7 @@ namespace Website.Dal.UnitOfWorks
         IGalleryRepository GalleryRepository { get; }
         IFacilityRepository FacilityRepository { get; }
         IClassRoomRepository ClassRoomRepository { get; }
+        ISpecializedRepository SpecializedRepository { get; }
         IBaseRepository<TEntity, TPrimaryKey> GetRepository<TEntity, TPrimaryKey>() where TEntity : BaseEntity<TPrimaryKey> where TPrimaryKey : struct;
         Task<int> CompleteAsync();
     }
