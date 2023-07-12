@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Text.RegularExpressions;
 using Website.Shared.Extensions;
 
 namespace Website.Entity.Models
@@ -21,7 +23,19 @@ namespace Website.Entity.Models
             {
                 return SetIdRandom();
             }
-            return $"{Guid.NewGuid()}_{this.Name}".Replace(" ", "_").Replace("-", "_").ConvertVietnameseToEnglish();
+            return ReplaceSpecialCharactersFileName(this.Name);
+        }
+
+        private static string ReplaceSpecialCharactersFileName(string fileName)
+        {
+            var fileExtension = Path.GetExtension(fileName);
+            var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName).ConvertVietnameseToEnglish();
+            var strRamndom = Guid.NewGuid().ToString().Substring(0, 8);
+
+            var replacedFileNameWithoutExtension = Regex.Replace(fileNameWithoutExtension, @"[^a-zA-Z0-9]+", " ");
+            var words = replacedFileNameWithoutExtension.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            return $"{string.Join("_", words)}_{strRamndom}{fileExtension}";
         }
     }
 }
