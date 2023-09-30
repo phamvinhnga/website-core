@@ -4,7 +4,9 @@ using Website.Shared.Bases.Models;
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
-SerilogServiceBuilder.CreateBuilder(configuration, builder.Environment);
+// Add log
+builder.Host.UseSwaggerSerilogBuilder();
+
 // Add services to the container.
 builder.Services.AddOptions<DbContextConnectionSettingOptions>()
     .Bind(builder.Configuration
@@ -25,8 +27,8 @@ builder.Services.UseAutoMapperServiceBuilder(configuration);
 builder.Services.UseInjectionServiceBuilder(configuration);
 builder.Services.UseWebServiceBuilder(configuration);
 builder.Services.UseAuthServiceBuilder(configuration);
-var app = builder.Build();
 
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsStaging() || app.Environment.IsDevelopment())
 {
