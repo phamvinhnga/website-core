@@ -25,7 +25,7 @@ services:
             - JWT__Expires=1
             - JWT__ExpiresRefreshToken=2
             - Upload__Folder=/upload
-            - Upload__Url=http://localhost:5001/api/file/{0}/{1}
+            - Upload__Url=http://api.huyenduc.click/api/file/{0}/{1}
             - ASPNETCORE_URLS=http://0.0.0.0:5001
 
     website-core-2:
@@ -52,7 +52,7 @@ services:
             - JWT__Expires=1
             - JWT__ExpiresRefreshToken=2
             - Upload__Folder=/upload
-            - Upload__Url=http://localhost:5002/api/file/{0}/{1}
+            - Upload__Url=http://api.huyenduc.click/api/file/{0}/{1}
             - ASPNETCORE_URLS=http://0.0.0.0:5002
 
 volumes:
