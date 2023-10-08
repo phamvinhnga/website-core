@@ -39,7 +39,7 @@ namespace Website.Biz.Managers
             {
                 var base64String = item.Groups[2].Value;
                 byte[] fileBytes = Convert.FromBase64String(base64String);
-                var fileExtension = GetBase64ImageExtension(base64String);
+                var fileExtension = GetBase64ImageExtension(item.Groups[0].Value);
                 var id = $"no_name_{Guid.NewGuid()}{fileExtension}".Replace("-", "_");
                 var filePath = Path.Combine(path, id);
 
@@ -94,16 +94,23 @@ namespace Website.Biz.Managers
 
         private string GetBase64ImageExtension(string base64Image)
         {
-            var mimeType = MimeGuesser.GuessMimeType(base64Image);
-            var extension = MimeTypesMap.GetExtension(mimeType);
-            if (!string.IsNullOrEmpty(extension))
+            if (base64Image.Contains("data:image/png;base64,"))
             {
-                return "." + extension;
+                return ".png";
             }
-            else
+            else if (base64Image.Contains("data:image/jpeg;base64,"))
             {
-                return ".unknown";
+                return ".jpg";
             }
+            else if (base64Image.Contains("data:image/jpg;base64,"))
+            {
+                return ".jpg";
+            }
+            else if (base64Image.Contains("data:image/gif;base64,"))
+            {
+                return ".gif";
+            }
+            return string.Empty;
         }
     }
 }

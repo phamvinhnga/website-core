@@ -22,42 +22,42 @@ namespace Website.Shared.AutoMapper
 
             #region post
             CreateMap<PostInputModel, Post>()
-                .ForMember(d => d.Thumbnail, o => o.Ignore());
+                .ForMember(d => d.Thumbnail, otp => otp.MapFrom(src => src.Thumbnail.ConvertToJson()));
             CreateMap<Post, PostOutputModel>()
                 .ForMember(d => d.Thumbnail, opt => opt.MapFrom(src => src.Thumbnail.ConvertFromJson<FileModel>()));
             #endregion post
 
             #region teacher
             CreateMap<TeacherInputModel, Teacher>()
-                .ForMember(d => d.Thumbnail, o => o.Ignore());
+                .ForMember(d => d.Thumbnail, otp => otp.MapFrom(src => src.Thumbnail.ConvertToJson()));
             CreateMap<Teacher, TeacherOutputModel>()
                 .ForMember(d => d.Thumbnail, opt => opt.MapFrom(src => src.Thumbnail.ConvertFromJson<FileModel>()));
             #endregion teacher
 
             #region parent
             CreateMap<ParentInputModel, Parent>()
-                .ForMember(d => d.Thumbnail, o => o.Ignore());
+                  .ForMember(d => d.Thumbnail, otp => otp.MapFrom(src => src.Thumbnail.ConvertToJson()));
             CreateMap<Parent, ParentOutputModel>()
                 .ForMember(d => d.Thumbnail, opt => opt.MapFrom(src => src.Thumbnail.ConvertFromJson<FileModel>()));
             #endregion parent
 
             #region Gallery
             CreateMap<GalleryInputModel, Gallery>()
-                .ForMember(d => d.Thumbnail, o => o.Ignore());
+                .ForMember(d => d.Thumbnail, otp => otp.MapFrom(src => src.Thumbnail.ConvertToJson()));
             CreateMap<Gallery, GalleryOutputModel>()
                 .ForMember(d => d.Thumbnail, opt => opt.MapFrom(src => src.Thumbnail.ConvertFromJson<FileModel>()));
             #endregion Gallery
 
             #region Facility
             CreateMap<FacilityInputModel, Facility>()
-                .ForMember(d => d.Thumbnail, o => o.Ignore());
+                     .ForMember(d => d.Thumbnail, otp => otp.MapFrom(src => src.Thumbnail.ConvertToJson()));
             CreateMap<Facility, FacilityOutputModel>()
                 .ForMember(d => d.Thumbnail, opt => opt.MapFrom(src => src.Thumbnail.ConvertFromJson<FileModel>()));
             #endregion Facility
 
             #region ClassRoom
             CreateMap<ClassRoomInputModel, ClassRoom>()
-                .ForMember(d => d.Thumbnail, o => o.Ignore());
+                .ForMember(d => d.Thumbnail, otp => otp.MapFrom(src => src.Thumbnail.ConvertToJson()));
             CreateMap<ClassRoom, ClassRoomOutputModel>()
                 .ForMember(d => d.Thumbnail, opt => opt.MapFrom(src => src.Thumbnail.ConvertFromJson<FileModel>()));
             #endregion ClassRoom

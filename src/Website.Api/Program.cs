@@ -29,11 +29,13 @@ builder.Services.UseWebServiceBuilder(configuration);
 builder.Services.UseAuthServiceBuilder(configuration);
 
 var app = builder.Build();
+app.UseSwaggerApplicationBuilder(configuration);
+
 // Configure the HTTP request pipeline.
-if (app.Environment.IsStaging() || app.Environment.IsDevelopment())
-{
-    app.UseSwaggerApplicationBuilder(configuration);
-}
+//if (app.Environment.IsStaging() || app.Environment.IsDevelopment())
+//{
+//    app.UseSwaggerApplicationBuilder(configuration);
+//}
 app.UseCors(x => x
                 .AllowAnyMethod()
                 .AllowAnyHeader()
